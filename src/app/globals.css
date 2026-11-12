@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-display), "Times New Roman", Georgia, serif;
+
+  /* Warm editorial palette: ivory paper, charcoal ink, one bronze accent */
+  --color-paper: #f4f1eb;
+  --color-paper-2: #ece7de;
+  --color-surface: #fbfaf7;
+  --color-ink: #141311;
+  --color-ink-2: #3b3833;
+  --color-muted: #77716a;
+  --color-line: #e1dbd0;
+  --color-line-strong: #cdc5b7;
+  --color-accent: #8a6a42;
+  --color-accent-soft: #efe6d8;
+  --color-night: #131210;
+  --color-night-2: #1c1a17;
+  --color-night-line: #2e2b26;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Small uppercase label used across the site */
+.label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Underlined text link, as in the reference layouts */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+  transition: background-size 0.35s var(--ease-out-soft);
+}
+.link-underline:hover {
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+}
+
+/* Soft window-light pattern behind the hero portrait */
+.window-light {
+  background:
+    linear-gradient(115deg, transparent 0 18%, rgb(255 255 255 / 0.32) 18% 27%, transparent 27% 31%, rgb(255 255 255 / 0.26) 31% 40%, transparent 40%),
+    radial-gradient(120% 80% at 80% 0%, #efe9df 0%, transparent 60%),
+    linear-gradient(180deg, #e6dfd3 0%, #d9d0c2 100%);
+}
+
+/* Fine paper grain over large flat areas */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
