@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: "Kausik Ganapathy Hari",
     description,
     type: "website",
-    images: [{ url: "/images/profile/kausik.webp", width: 1000, height: 1500 }],
+    images: [{ url: "/images/profile/kausik-studio.webp", width: 1400, height: 1355 }],
   },
 };
 

@@ -38,7 +38,8 @@ export const profile = {
   github: "https://github.com/kauziee-hub",
   githubHandle: "kauziee-hub",
   resume: "/Kausik_Ganapathy_Hari_Resume.pdf",
-  photo: "/images/profile/kausik-hero.webp",
+  // Studio portrait made with Higgsfield from Kausik's own photos (face kept as in kausik.webp).
+  photo: "/images/profile/kausik-studio.webp",
   photoFull: "/images/profile/kausik.webp",
   heroLine: "Computer Science at VIT Chennai and Data Science at IIT Madras. Founder of Locah. I build the model, the backend and the interface.",
   summary:

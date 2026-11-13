@@ -20,7 +20,7 @@ export function Hero() {
   const wordY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -60]);
 
   return (
-    <section id="top" ref={ref} className="relative overflow-hidden">
+    <section id="top" ref={ref} className="hero-bg relative overflow-hidden">
       <div className="relative flex flex-col lg:block lg:h-[max(720px,min(100svh,960px))]">
         {/* Portrait: frameless, on the page's own background, rising from the bottom edge */}
         <motion.div
@@ -30,7 +30,6 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, delay: 0.15, ease }}
         >
-          <div className="hero-glow absolute inset-0" aria-hidden />
           <motion.img
             src={profile.photo}
             alt={`Portrait of ${profile.name}`}
