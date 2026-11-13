@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import type { Media } from "@/content/site";
 import { AutoVideo } from "./ui/AutoVideo";
 import { Expand, Play } from "./ui/Icons";
@@ -14,9 +14,22 @@ export function Gallery({ media, label }: { media: Media[]; label: string }) {
   const { open } = useLightbox();
   const item = media[index];
 
+  // Scroll-driven 3D: the screen arrives tilted back in perspective and settles flat
+  // as it reaches the middle of the viewport. Kept subtle, and off for reduced motion.
+  const stageRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: stageRef, offset: ["start end", "center center"] });
+  const rotateX = useTransform(scrollYProgress, [0, 1], [reduce ? 0 : 22, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [reduce ? 1 : 0.9, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [reduce ? 0 : 40, 0]);
+
   return (
-    <div>
-      <div className="overflow-hidden rounded-[18px] border border-line-strong/70 bg-surface shadow-[0_40px_80px_-48px_rgba(20,19,17,0.55)]">
+    <div style={{ perspective: 1600 }}>
+      <motion.div
+        ref={stageRef}
+        style={{ rotateX, scale, y, transformOrigin: "50% 100%" }}
+        className="overflow-hidden rounded-[18px] border border-line-strong/70 bg-surface shadow-[0_40px_80px_-48px_rgba(20,19,17,0.55)] will-change-transform"
+      >
         <div className="flex items-center gap-3 border-b border-line bg-paper-2/70 px-4 py-2.5">
           <span className="flex gap-1.5" aria-hidden>
             <span className="h-2.5 w-2.5 rounded-full bg-[#e0dbd2]" />
@@ -60,7 +73,7 @@ export function Gallery({ media, label }: { media: Media[]; label: string }) {
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
 
       <div className="mt-3 flex items-start justify-between gap-6">
         <p className="min-h-[2.5rem] text-sm leading-snug text-ink-2">{item.caption}</p>

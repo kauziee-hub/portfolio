@@ -18,7 +18,7 @@ export function ClientWork() {
           eyebrow="Freelance"
           title={
             <>
-              Selected <em className="text-accent">client work.</em>
+              Selected <span className="text-muted">client work.</span>
             </>
           }
           intro="A few favourites from my freelance work since January 2025. I find the clients myself, take each build from the first conversation to launch, and keep supporting it afterwards."
@@ -55,7 +55,7 @@ export function ClientWork() {
                     <span className="h-px w-6 bg-line-strong" />
                     {c.client}
                   </p>
-                  <h3 className="mt-4 font-serif text-[2.6rem] leading-none tracking-[-0.02em] text-ink sm:text-5xl">{c.name}</h3>
+                  <h3 className="display mt-4 text-[2.6rem] text-ink sm:text-[3.2rem]">{c.name}</h3>
                   <p className="mt-5 text-[16px] leading-relaxed text-ink-2">{c.text}</p>
                   <ul className="mt-6 space-y-2.5">
                     {c.points.map((pt) => (

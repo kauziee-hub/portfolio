@@ -49,9 +49,9 @@ function ProjectCase({ p }: { p: Project }) {
               <span aria-hidden>·</span>
               <span>{p.role}</span>
             </p>
-            <h3 className="mt-4 font-serif text-[3.1rem] leading-none tracking-[-0.02em] text-ink sm:text-7xl">{p.name}</h3>
+            <h3 className="display mt-4 text-[3.2rem] text-ink sm:text-[4.6rem] lg:text-[5.2rem]">{p.name}</h3>
             <p className="mt-4 max-w-2xl text-lg text-ink-2">{p.tagline}</p>
-            {p.context && <p className="mt-2 text-[15px] italic text-muted">{p.context}</p>}
+            {p.context && <p className="mt-2 text-[15px] text-muted">{p.context}</p>}
           </div>
           <div className="flex flex-col gap-4 lg:col-span-4 lg:items-end">
             {p.recognition && (
@@ -71,7 +71,7 @@ function ProjectCase({ p }: { p: Project }) {
           </div>
         </div>
 
-        <p className="mt-10 max-w-3xl border-l-2 border-[var(--acc)] pl-5 font-serif text-[1.7rem] italic leading-snug text-ink sm:text-[2.1rem]">
+        <p className="mt-10 max-w-3xl border-l-2 border-[var(--acc)] pl-5 font-serif text-[1.65rem] leading-snug text-ink sm:text-[2rem]">
           {p.hook}
         </p>
       </Reveal>
@@ -90,7 +90,7 @@ function ProjectCase({ p }: { p: Project }) {
               <div key={m.label} className="border-b border-r border-line p-5">
                 <dt className="sr-only">{m.label}</dt>
                 <dd>
-                  <span className="block font-serif text-4xl leading-none tracking-[-0.02em] text-ink">{m.value}</span>
+                  <span className="display block text-[2.4rem] text-ink">{m.value}</span>
                   <span className="mt-2 block text-[13px] text-muted">{m.label}</span>
                 </dd>
               </div>
@@ -134,7 +134,7 @@ export function Work() {
         eyebrow="Selected work"
         title={
           <>
-            Systems built end to end, <em className="text-accent">from data to screen.</em>
+            Systems built end to end, <span className="text-muted">from data to screen.</span>
           </>
         }
         intro="Each one started from a real problem: a scam payment, a leaking pipeline, a shop owner without software, a student buried in deadlines. I designed the models, the backend and the interface people actually use."

@@ -12,8 +12,8 @@ export function Contact() {
             <span className="h-px w-8 bg-white/30" />
             Contact
           </p>
-          <h2 className="mt-6 max-w-5xl font-serif text-[3rem] leading-[0.98] tracking-[-0.02em] sm:text-7xl lg:text-[6.2rem]">
-            Let&apos;s build something <em className="text-[#d6b98c]">that has to work.</em>
+          <h2 className="display mt-6 max-w-5xl text-[3.4rem] sm:text-[5rem] lg:text-[7rem]">
+            Let&apos;s build something <span className="text-white/45">that has to work.</span>
           </h2>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/65">
             Have a problem that needs a model, a product or both? Write to me, and I&apos;ll reply within a day.
@@ -49,7 +49,7 @@ export function Contact() {
 
         <footer className="mt-24 flex flex-col items-start justify-between gap-4 border-t border-night-line pt-8 text-sm text-white/45 sm:flex-row sm:items-center">
           <p>
-            <span className="font-serif text-xl text-white">Kausik<span className="text-[#d6b98c]">.</span></span>
+            <span className="display text-xl text-white">Kausik</span>
             <span className="ml-3">© {new Date().getFullYear()} {profile.name} · {profile.location}</span>
           </p>
           <a href="#top" className="label transition-colors hover:text-white">

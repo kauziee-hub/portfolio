@@ -1,15 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Anton, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const display = Instrument_Serif({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-});
+// Condensed display face for headings, as in the reference layout
+const heading = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400" });
+// Serif used sparingly, upright only, for the lead lines
+const display = Instrument_Serif({ variable: "--font-display", subsets: ["latin"], weight: "400" });
 
 const description =
   "AI/ML engineer and full-stack developer from Chennai. Builder of Vigil, OILINTELLIGENCE, Locah, UniTask and VitaSense. CS at VIT Chennai, BS Data Science at IIT Madras.";
@@ -28,12 +26,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f1eb",
+  themeColor: "#e4e2db",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${display.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${heading.variable} ${display.variable}`}>
       <body>{children}</body>
     </html>
   );

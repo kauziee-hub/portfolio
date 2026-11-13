@@ -4,18 +4,19 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-serif: var(--font-display), "Times New Roman", Georgia, serif;
+  --font-heading: var(--font-anton), "Arial Narrow", Impact, sans-serif;
 
-  /* Warm editorial palette: ivory paper, charcoal ink, one bronze accent */
-  --color-paper: #f4f1eb;
-  --color-paper-2: #ece7de;
-  --color-surface: #fbfaf7;
-  --color-ink: #141311;
-  --color-ink-2: #3b3833;
-  --color-muted: #77716a;
-  --color-line: #e1dbd0;
-  --color-line-strong: #cdc5b7;
-  --color-accent: #8a6a42;
-  --color-accent-soft: #efe6d8;
+  /* Muted warm-grey palette after the reference: stone paper, near-black ink, no loud accent */
+  --color-paper: #e4e2db;
+  --color-paper-2: #d9d6ce;
+  --color-surface: #eceae4;
+  --color-ink: #121211;
+  --color-ink-2: #33322e;
+  --color-muted: #6a6862;
+  --color-line: #cdcac1;
+  --color-line-strong: #b5b1a7;
+  --color-accent: #5e5641;
+  --color-accent-soft: #d6d1c3;
   --color-night: #131210;
   --color-night-2: #1c1a17;
   --color-night-line: #2e2b26;
@@ -76,21 +77,13 @@ body {
   background-position: 100% 100%;
 }
 
-/* The hero takes the portrait's own studio backdrop colour, so the photo sits on it with no frame */
-.hero-bg {
-  background: linear-gradient(90deg, var(--color-paper) 0%, #f3eade 46%, #f3eade 100%);
-}
-
-/* Fade the portrait's edges into the backdrop so it never reads as a pasted rectangle */
-.hero-photo {
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 8%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0%, #000 8%);
-  mask-composite: intersect;
+/* Condensed uppercase display headings */
+.display {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.92;
 }
 
 /* Fine paper grain over large flat areas */

@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { heroStats, profile, recognisedAt } from "@/content/site";
-import { ArrowDown, ArrowRight, ArrowUpRight, Trophy } from "./ui/Icons";
+import { capabilities, heroCredentials, profile } from "@/content/site";
+import { ArrowRight } from "./ui/Icons";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const rise = (delay: number) => ({
@@ -16,164 +16,88 @@ export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 90]);
-  const wordY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -60]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 70]);
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 1.08]);
 
   return (
-    <section id="top" ref={ref} className="hero-bg relative overflow-hidden">
-      <div className="relative flex flex-col lg:block lg:h-[max(720px,min(100svh,960px))]">
-        {/* Portrait: frameless, on the page's own background, rising from the bottom edge */}
-        <motion.div
-          style={{ y: photoY }}
-          className="pointer-events-none relative order-last h-[min(118vw,560px)] w-full lg:absolute lg:bottom-0 lg:right-0 lg:top-20 lg:h-auto lg:w-[54%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.15, ease }}
-        >
-          <motion.img
-            src={profile.photo}
-            alt={`Portrait of ${profile.name}`}
-            fetchPriority="high"
-            className="hero-photo absolute bottom-0 left-1/2 h-[104%] w-auto max-w-none -translate-x-1/2 object-contain object-bottom"
-            initial={{ scale: 1.05, y: 30 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ duration: 1.6, delay: 0.15, ease }}
-          />
-        </motion.div>
+    <section id="top" ref={ref} className="relative overflow-hidden">
+      {/* Portrait in a tall arch, flush with the top of the page */}
+      <motion.div
+        className="relative mx-auto mt-20 h-[min(124vw,520px)] w-[min(80vw,360px)] overflow-hidden rounded-b-full bg-[#f3eade] lg:absolute lg:left-1/2 lg:top-0 lg:mt-0 lg:h-[min(84svh,740px)] lg:w-[clamp(320px,29vw,430px)] lg:-translate-x-[38%]"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.1, ease }}
+      >
+        <motion.img
+          src={profile.photo}
+          alt={`Portrait of ${profile.name}`}
+          fetchPriority="high"
+          style={{ y: photoY, scale: photoScale }}
+          className="h-full w-full object-cover object-[50%_22%]"
+        />
+      </motion.div>
 
-        <div className="relative mx-auto flex h-full max-w-[1240px] flex-col px-5 pt-24 sm:px-8 lg:pt-20">
-          {/* Vertical rail */}
-          <motion.div
-            {...rise(0.6)}
-            className="pointer-events-none absolute bottom-12 left-0 top-32 hidden w-8 flex-col items-center justify-between xl:flex"
-            aria-hidden
-          >
-            <span className="label rotate-180 whitespace-nowrap text-muted [writing-mode:vertical-rl]">AI/ML engineer · Full-stack</span>
-            <span className="my-6 w-px flex-1 bg-line-strong" />
-            <span className="label rotate-180 text-muted [writing-mode:vertical-rl]">2026</span>
-          </motion.div>
+      <div className="relative mx-auto max-w-[1240px] px-5 sm:px-8 lg:flex lg:min-h-[max(720px,min(100svh,900px))] lg:flex-col lg:pt-28">
+        <div className="grid gap-12 pt-10 lg:grid-cols-12 lg:gap-8 lg:pt-6">
+          {/* Introduction */}
+          <div className="relative z-10 lg:col-span-5">
+            <motion.p {...rise(0.15)} className="font-serif text-[1.7rem] leading-none text-ink sm:text-[2rem]">
+              Hey, I&apos;m {profile.shortName},
+            </motion.p>
+            <motion.h1 {...rise(0.25)} className="mt-5 text-ink">
+              <span className="display block text-[3.6rem] sm:text-[5rem] lg:text-[clamp(4rem,min(6.4vw,10.5svh),6.2rem)]">AI Engineer</span>
+              <span className="block font-serif text-[3rem] leading-[1] tracking-[-0.01em] sm:text-[4.2rem] lg:text-[clamp(3.3rem,min(5.4vw,8.8svh),5.2rem)]">
+                &amp; Full&#8209;stack
+              </span>
+              <span className="display block text-[3.6rem] sm:text-[5rem] lg:text-[clamp(4rem,min(6.4vw,10.5svh),6.2rem)]">Developer</span>
+            </motion.h1>
 
-          <div className="flex flex-1 flex-col lg:max-w-[50%] xl:pl-14">
-            {/* Stats, top left as in the reference */}
-            <motion.dl {...rise(0.45)} className="mt-6 grid max-w-[30rem] grid-cols-3 gap-x-6 lg:mt-10">
-              {heroStats.map((s) => (
-                <div key={s.label}>
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd>
-                    <span className="block text-[2.2rem] font-light leading-none tracking-[-0.04em] text-ink sm:text-[2.6rem]">
-                      {s.value}
-                      {s.suffix && <span className="ml-0.5 align-top text-[0.55em] text-accent">{s.suffix}</span>}
-                    </span>
-                    <span className="mt-2 block text-[13px] text-muted">{s.label}</span>
-                  </dd>
-                </div>
-              ))}
-            </motion.dl>
+            <motion.p {...rise(0.4)} className="mt-6 max-w-[26rem] text-[15.5px] leading-relaxed text-ink-2">
+              {profile.heroLine}
+            </motion.p>
 
-            <div className="flex flex-1 flex-col justify-center py-10 lg:py-6">
-              <motion.h1 style={{ y: wordY }}>
-                <span className="block overflow-hidden pb-[0.06em]">
-                  <span className="flex text-[clamp(5.6rem,min(17vw,23svh),12.5rem)] font-extralight leading-[0.86] tracking-[-0.06em] text-ink">
-                    {"Hello".split("").map((ch, i) => (
-                      <motion.span
-                        key={i}
-                        className="inline-block"
-                        initial={{ y: "105%" }}
-                        animate={{ y: 0 }}
-                        transition={{ duration: 1.05, delay: 0.1 + i * 0.06, ease }}
-                      >
-                        {ch}
-                      </motion.span>
-                    ))}
-                  </span>
+            <motion.div {...rise(0.5)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+              <a
+                href="#work"
+                className="label group inline-flex items-center gap-3 rounded-full bg-ink py-2 pl-6 pr-2 text-paper transition-colors hover:bg-ink-2"
+              >
+                View my work
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-paper text-ink transition-transform group-hover:translate-x-0.5">
+                  <ArrowRight width={15} height={15} />
                 </span>
-                <motion.span {...rise(0.55)} className="mt-6 flex items-baseline gap-3 text-[1.35rem] leading-snug text-ink sm:text-[1.6rem]">
-                  <span className="text-accent">—</span>
-                  <span>
-                    I&apos;m <span className="font-serif text-[1.25em] italic">{profile.shortName}</span>, an AI engineer and full&#8209;stack developer.
-                  </span>
-                </motion.span>
-              </motion.h1>
-
-              <motion.p {...rise(0.65)} className="mt-5 max-w-[30rem] text-[16px] leading-relaxed text-ink-2 sm:text-[17px]">
-                {profile.heroLine}
-              </motion.p>
-
-              <motion.div {...rise(0.75)} className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-                <a
-                  href="#work"
-                  className="label group inline-flex items-center gap-2.5 rounded-full bg-ink px-6 py-4 text-paper transition-colors hover:bg-accent"
-                >
-                  View my work
-                  <ArrowRight width={15} height={15} className="transition-transform group-hover:translate-x-0.5" />
-                </a>
-                <a href={profile.resume} target="_blank" rel="noopener" className="label link-underline text-ink">
-                  Download résumé
-                </a>
-              </motion.div>
-            </div>
-
-            <motion.a
-              {...rise(0.9)}
-              href="#work"
-              className="label mb-10 hidden w-fit items-center gap-2 text-ink-2 transition-colors hover:text-ink lg:inline-flex"
-            >
-              Scroll down
-              <motion.span animate={reduce ? undefined : { y: [0, 4, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}>
-                <ArrowDown width={14} height={14} />
-              </motion.span>
-            </motion.a>
+              </a>
+              <a href={profile.resume} target="_blank" rel="noopener" className="label link-underline text-ink">
+                Download résumé
+              </a>
+            </motion.div>
           </div>
-        </div>
 
-        {/* Floating notes over the portrait */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1, ease }}
-          className="absolute right-5 top-[calc(100%-min(118vw,560px)+1.25rem)] z-10 flex items-center gap-2.5 rounded-full border border-white/70 bg-white/70 py-2 pl-2 pr-4 shadow-[0_12px_30px_-18px_rgba(20,19,17,0.5)] backdrop-blur-md lg:left-[51%] lg:right-auto lg:top-[60%]"
-        >
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-ink text-paper">
-            <Trophy width={14} height={14} />
-          </span>
-          <span className="text-[13px] font-medium text-ink">1st prize · VISAI 2025</span>
-        </motion.div>
-
-        <motion.a
-          href="#oilintelligence"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.15, ease }}
-          className="group absolute bottom-6 right-5 z-10 hidden max-w-[280px] rounded-2xl border border-white/70 bg-white/75 p-4 shadow-[0_20px_40px_-24px_rgba(20,19,17,0.55)] backdrop-blur-md sm:block lg:bottom-12 lg:right-[max(2rem,calc((100vw-1240px)/2+2rem))]"
-        >
-          <span className="label flex items-center gap-2 text-accent">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
-            </span>
-            Currently building
-          </span>
-          <span className="mt-2 block text-[15px] font-medium leading-snug text-ink">
-            OILINTELLIGENCE: physics-guided ML that finds where crude oil goes missing.
-          </span>
-          <span className="label mt-3 inline-flex items-center gap-1.5 text-ink-2 group-hover:text-ink">
-            See the project <ArrowUpRight width={13} height={13} />
-          </span>
-        </motion.a>
-      </div>
-
-      <div className="relative border-y border-line bg-surface">
-        <div className="mx-auto flex max-w-[1240px] flex-col gap-4 px-5 py-6 sm:px-8 md:flex-row md:items-center md:gap-10">
-          <p className="label shrink-0 text-muted">Recognised at</p>
-          <ul className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            {recognisedAt.map((r, i) => (
-              <li key={r} className="flex items-center gap-3 text-[15px] font-medium text-ink/75">
-                {i > 0 && <span className="h-1 w-1 rounded-full bg-line-strong" aria-hidden />}
-                {r}
-              </li>
+          {/* Credentials, right-aligned as in the reference */}
+          <motion.dl
+            {...rise(0.55)}
+            className="grid grid-cols-2 gap-x-6 gap-y-8 lg:col-span-3 lg:col-start-10 lg:grid-cols-1 lg:gap-y-9 lg:pt-16 lg:text-right"
+          >
+            {heroCredentials.map((c) => (
+              <div key={c.value}>
+                <dt className="display text-[1.9rem] leading-none text-ink sm:text-[2.2rem]">{c.value}</dt>
+                <dd className="mt-2 text-[13px] leading-snug text-muted lg:ml-auto lg:max-w-[15rem]">{c.label}</dd>
+              </div>
             ))}
-          </ul>
+          </motion.dl>
         </div>
+
+        {/* What I do: four columns divided by hairlines */}
+        <motion.ul
+          {...rise(0.7)}
+          className="mt-16 grid gap-y-8 border-t border-line pt-8 sm:grid-cols-2 lg:mt-auto lg:grid-cols-4 lg:border-t-0 lg:pb-12 lg:pt-10"
+        >
+          {capabilities.map((c, i) => (
+            <li key={c.title} className={`sm:pr-6 ${i > 0 ? "lg:border-l lg:border-line lg:pl-6" : ""}`}>
+              <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-ink">{c.title}</h2>
+              <p className="mt-2 max-w-[17rem] text-[13px] leading-relaxed text-muted">{c.text}</p>
+            </li>
+          ))}
+        </motion.ul>
       </div>
     </section>
   );

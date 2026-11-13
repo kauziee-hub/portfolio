@@ -11,7 +11,7 @@ export function Journey() {
           eyebrow="Experience & education"
           title={
             <>
-              Where I&apos;ve been <em className="text-accent">building.</em>
+              Where I&apos;ve been <span className="text-muted">building.</span>
             </>
           }
         />
@@ -24,7 +24,7 @@ export function Journey() {
                 <li key={e.title} className="border-b border-line py-7 last:border-b-0">
                   <Reveal delay={i * 0.05}>
                     <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                      <h4 className="font-serif text-[1.9rem] leading-tight text-ink">{e.title}</h4>
+                      <h4 className="display text-[1.9rem] text-ink">{e.title}</h4>
                       <span className="font-mono text-xs text-muted">{e.period}</span>
                     </div>
                     <p className="mt-1 text-[15px] font-medium text-ink-2">
@@ -48,7 +48,7 @@ export function Journey() {
                       <span className="shrink-0 font-mono text-xs text-muted">{ed.period}</span>
                     </div>
                     <p className="mt-1 text-[15px] text-ink-2">{ed.degree}</p>
-                    <p className="mt-3 font-serif text-2xl text-accent">{ed.detail}</p>
+                    <p className="display mt-3 text-[1.6rem] text-ink">{ed.detail}</p>
                   </Reveal>
                 </li>
               ))}

@@ -90,7 +90,7 @@ export function Recognition() {
           eyebrow="Recognition"
           title={
             <>
-              Built under pressure, <em className="text-[#d6b98c]">judged by industry.</em>
+              Built under pressure, <span className="text-white/45">judged by industry.</span>
             </>
           }
           intro="Most of my projects were tested first at hackathons and competitions: real problem statements from Renault-Nissan and Indian Bank, judged by people who run those systems for a living."
@@ -100,7 +100,7 @@ export function Recognition() {
           {recognition.map((r, i) => (
             <li key={r.id} className="relative grid gap-6 border-t border-night-line py-12 sm:py-16 lg:grid-cols-12 lg:gap-10">
               <Reveal className="lg:col-span-3">
-                <p className="font-serif text-4xl leading-none tracking-[-0.01em] text-white sm:text-5xl">{r.date}</p>
+                <p className="display text-[2.4rem] text-white sm:text-[2.9rem]">{r.date}</p>
                 <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#d6b98c]/12 px-3 py-1 text-[13px] font-medium text-[#e6cfa8]">
                   <Trophy width={14} height={14} /> {r.kicker}
                 </p>
@@ -112,7 +112,7 @@ export function Recognition() {
                     <Photos r={r} />
                   </div>
                   <div>
-                    <h3 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.01em] text-white sm:text-[2.4rem]">{r.title}</h3>
+                    <h3 className="text-[1.6rem] font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[1.9rem]">{r.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-white/50">{r.event}</p>
                     <p className="mt-5 text-[16px] leading-relaxed text-white/80">{r.text}</p>
                     {r.projectId ? (

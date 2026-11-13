@@ -58,8 +58,8 @@ export function Nav() {
           }`}
         >
           <a href="#top" onClick={() => setOpen(false)} className="group flex items-baseline gap-0.5" aria-label="Kausik Ganapathy Hari, home">
-            <span className="font-serif text-[28px] leading-none tracking-[-0.01em] text-ink">Kausik</span>
-            <span className="font-serif text-[28px] leading-none text-accent transition-transform group-hover:translate-x-0.5">.</span>
+            <span className="mr-2 inline-block h-2.5 w-2.5 self-center rounded-full bg-ink transition-transform group-hover:scale-125" />
+            <span className="display text-[24px] leading-none text-ink">Kausik</span>
           </a>
 
           <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
@@ -136,7 +136,7 @@ export function Nav() {
                     className="flex items-baseline gap-4 border-b border-line py-4"
                   >
                     <span className="font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-serif text-[2.4rem] leading-none tracking-[-0.01em] text-ink">{l.label}</span>
+                    <span className="display text-[2.6rem] text-ink">{l.label}</span>
                   </a>
                 </motion.li>
               ))}
