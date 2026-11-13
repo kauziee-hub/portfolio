@@ -56,7 +56,10 @@ export function ClientWork() {
                     {c.client}
                   </p>
                   <h3 className="display mt-4 text-[2.6rem] text-ink sm:text-[3.2rem]">{c.name}</h3>
-                  <p className="mt-5 text-[16px] leading-relaxed text-ink-2">{c.text}</p>
+                  <h4 className="label mt-6 text-muted">The brief</h4>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{c.brief}</p>
+                  <h4 className="label mt-5 text-muted">What I built</h4>
+                  <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{c.text}</p>
                   <ul className="mt-6 space-y-2.5">
                     {c.points.map((pt) => (
                       <li key={pt} className="flex gap-3 text-[15px] leading-snug text-ink-2">

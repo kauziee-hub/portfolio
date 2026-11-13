@@ -20,7 +20,12 @@ export type Project = {
   context?: string;
   accent: string;
   recognition?: string[];
+  /** Who has the problem and why it matters. */
   problem: string;
+  /** What I built, in plain words: the approach a reviewer should remember. */
+  approach: string;
+  /** Where it landed: results, recognition, deployment status. */
+  outcome: string;
   built: { lead: string; text: string }[];
   metrics: { value: string; label: string }[];
   footnote?: string;
@@ -77,7 +82,11 @@ export const projects: Project[] = [
     accent: "#0E9F9A",
     recognition: ["Consolation prize · Indian Bank IntelliTrace 2026", "Reviewed by Spirax Sarco"],
     problem:
-      "Scammers push people into sending money with fake 'digital arrest' calls, investment and job scams. The money lands in mule accounts that pass it on within minutes, and most fraud tools only look once it has already gone.",
+      "In 'digital arrest', investment and job scams, the victim is talked into sending the money themselves, so the payment looks perfectly normal. It lands in mule accounts that pass it on within minutes. Most fraud systems score a transaction after it has settled, by which point the money is already gone.",
+    approach:
+      "Vigil works in the seconds between the customer pressing pay and the money leaving. It scores each payment in about 3 ms on five kinds of evidence and responds in proportion: a silent pass, a heads-up, a purpose check, or a hold on that one payment, never a frozen account. Behind it, eight independent detectors, including a Graph Attention Network over the transaction graph, must agree before an account is called a mule, and every model score comes with a SHAP explanation.",
+    outcome:
+      "Built for the Indian Bank IntelliTrace Hackathon, where it reached the Grand Finale and won a consolation prize judged by the bank's own team. It holds 0.98 ROC-AUC on attack families kept out of training. Spirax Sarco later reviewed it with our faculty and expressed interest in collaborating with the team.",
     built: [
       {
         lead: "A decision before every payment.",
@@ -97,12 +106,12 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "~3 ms", label: "median decision" },
-      { value: "0.98", label: "ROC-AUC*" },
-      { value: "8", label: "detector families" },
-      { value: "5", label: "response tiers" },
+      { value: "0.98", label: "ROC-AUC on attack types never seen in training*" },
+      { value: "~3 ms", label: "median time to score a payment, before it moves" },
+      { value: "SHAP", label: "explanation attached to every model decision" },
+      { value: "Finale", label: "Indian Bank IntelliTrace 2026, consolation prize" },
     ],
-    footnote: "*Held-out synthetic worlds (split by world, leave-one-attack-family-out), not real-bank data.",
+    footnote: "*Evaluated on held-out synthetic worlds, leaving one attack family out at a time. Not real-bank data.",
     stack: ["Python", "FastAPI", "WebSockets", "scikit-learn", "PyTorch (GAT)", "SHAP", "React", "TypeScript", "Three.js", "Gemini API"],
     media: [
       { src: "/media/vigil-payment.webp", video: "/media/vigil-payment.mp4", caption: "A risky payment is paused on the customer's phone while the bank sees why" },
@@ -125,7 +134,11 @@ export const projects: Project[] = [
     role: "Architect and sole engineer",
     accent: "#D9731A",
     problem:
-      "Terminals lose real money to leaks, but most losses on paper are meter bias, gauging error or a transfer nobody booked. Telling a real loss from a bookkeeping one usually means days of manual reconciliation.",
+      "A crude-oil terminal reconciles what came in against what went out, and the books rarely balance. The gap might be a real leak, but more often it's a drifting meter, a gauging error or a transfer nobody recorded. Telling them apart usually takes days of manual reconciliation, and a slow answer to a real leak is both costly and dangerous.",
+    approach:
+      "OILINTELLIGENCE puts physics first and machine learning second. Instrument data streams in over MQTT and OPC UA; mass balances that follow the pipe network show where oil went missing, with their uncertainty. XGBoost flags abnormal windows and failing instruments, and a calibrated Bayesian model weighs a physical loss against meter bias or an unbooked transfer. A LangGraph agent then suggests the cheapest field check that would settle the question. It can investigate, but it has no way to operate the plant.",
+    outcome:
+      "In a recorded run on the built-in simulator, a 9 mm hole that didn't show in the site totals was flagged at its pipe junction within 18 minutes. After three field checks the agent named the right pipe at 96% confidence. Every case is scored against faults the simulator seeded, so the system is graded against a known answer key.",
     built: [
       {
         lead: "A virtual tank farm.",
@@ -145,13 +158,13 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "18 min", label: "to flag a 9 mm leak" },
-      { value: "96%", label: "on the true cause" },
-      { value: "4", label: "models in the loop" },
-      { value: "0", label: "write access to the plant" },
+      { value: "18 min", label: "to flag a 9 mm leak hidden in the site totals*" },
+      { value: "96%", label: "confidence on the true cause after three field checks*" },
+      { value: "±2σ", label: "uncertainty carried through every mass balance" },
+      { value: "Read-only", label: "the agent can investigate but never command a pump or valve" },
     ],
     footnote:
-      "From a demo run: a 9 mm hole in pipe PL-002 stayed invisible in site totals but was caught at the pipe junction (z = 5.7). Three field checks later, the agent named PL-002 at 96%. All results come from the simulator.",
+      "*From a recorded run: the leak in pipe PL-002 was caught at its junction (z = 5.7) while the site totals still looked normal. All results come from the simulator.",
     stack: ["Python", "FastAPI", "TimescaleDB", "MQTT", "OPC UA", "XGBoost", "LangGraph", "Next.js", "React Three Fiber", "Docker"],
     media: [
       { src: "/media/oil-twin.webp", video: "/media/oil-twin.mp4", caption: "The live digital twin: tanks, pumps, valves and flow, day to night" },
@@ -175,7 +188,11 @@ export const projects: Project[] = [
     accent: "#C2410C",
     recognition: ["Grand Finale · TSM-Technova 2026, Madurai"],
     problem:
-      "Local businesses in India run on WhatsApp, paper credit books and word of mouth. Most software assumes the owner has time, a laptop and fluent English.",
+      "Most local shops in India run on WhatsApp, a paper credit book and the owner's memory. Business software assumes an owner with spare time, a laptop and fluent English, so the shops that would gain the most from it are the least likely to use it.",
+    approach:
+      "Locah turns a conversation into a running business. The owner describes the shop in English, Tamil or Tanglish. Locah generates the website, lists it on a local marketplace and sets up a workspace with only the tools that kind of shop needs, from counter billing and stock to a credit book and WhatsApp orders. AI staff take on the repetitive work within permissions the owner sets, and answer only from the shop's own records, so they can't invent a price.",
+    outcome:
+      "Running as a multi-tenant platform: three Next.js apps, a FastAPI API and a background worker, with row-level security keeping every shop's data separate. Our team, The Think Tank, took Locah through the Chennai zonal round to the National Grand Finale of TSM-Technova 2026 in Madurai and pitched it to the jury and incubation mentors.",
     built: [
       {
         lead: "Onboarding is a conversation.",
@@ -195,10 +212,10 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "33", label: "shipped modules" },
-      { value: "3", label: "languages, incl. Tanglish" },
-      { value: "3", label: "AI employees" },
-      { value: "5", label: "deployed services" },
+      { value: "Finale", label: "TSM-Technova 2026, national AI innovation challenge" },
+      { value: "3 languages", label: "onboarding in English, Tamil or Tanglish" },
+      { value: "Isolated", label: "row-level security keeps every shop's data separate" },
+      { value: "Owner-gated", label: "AI staff act within set permissions, with a kill switch" },
     ],
     stack: ["Next.js", "TypeScript", "FastAPI", "PostgreSQL (Supabase)", "SQLAlchemy", "Gemini / DeepSeek", "Razorpay", "WhatsApp API", "Docker", "Railway"],
     media: [
@@ -222,7 +239,11 @@ export const projects: Project[] = [
     context: "Built for the Cloud Application Development course at VIT Chennai",
     accent: "#B45309",
     problem:
-      "Students copy deadlines out of Teams by hand, then stare at a list that tells them nothing about what to start first. The course brief was to ship a real cloud application, where every service does real work.",
+      "Students juggle deadlines across several Teams classes, copy them out by hand, and end up with a list that says nothing about what to start first. The course brief was to ship a real cloud application in which every AWS service does real work, not one that only exists on a slide.",
+    approach:
+      "UniTask pulls every assignment from Microsoft Teams every 30 minutes, ranks what's due by work left against time left, and tells the student what to do next and why. I led the cloud and backend side: one container on ECS Fargate behind a load balancer using TLS 1.3, a private encrypted PostgreSQL database on RDS, file uploads through short-lived S3 links, IAM roles instead of stored keys, and a CI pipeline that tests every build before it ships.",
+    outcome:
+      "Deployed and running on AWS in Mumbai, verified end to end on 29 October 2026, and live at the link above. It's designed to stay within free credits, with no NAT gateway and budget alarms at $5, $15 and $30.",
     built: [
       {
         lead: "Live on AWS, not just on a diagram.",
@@ -246,10 +267,10 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "8", label: "AWS services doing real work" },
-      { value: "TLS 1.3", label: "HTTPS at the load balancer" },
-      { value: "5 min", label: "presigned file links" },
-      { value: "$0", label: "spend, on free credits" },
+      { value: "Live", label: "on AWS ECS Fargate, RDS and S3 in ap-south-1" },
+      { value: "TLS 1.3", label: "HTTPS policy at the load balancer; database reachable only inside the VPC" },
+      { value: "CI-gated", label: "lint, tests on SQLite and Postgres, and a container smoke test on every push" },
+      { value: "$0", label: "spent so far, with budget alarms at $5, $15 and $30" },
     ],
     stack: ["AWS ECS (Fargate)", "Application Load Balancer", "Amazon RDS", "Amazon S3", "IAM", "CloudWatch", "AWS Budgets", "Docker", "GitHub Actions", "FastAPI", "React", "Microsoft Graph", "Gemini"],
     media: [
@@ -277,7 +298,11 @@ export const projects: Project[] = [
     accent: "#15803D",
     recognition: ["Jury appreciation · Avinya 2.0, SJCIT"],
     problem:
-      "Symptom checkers treat every conversation as the first one. They ignore sleep, stress, food, air quality and history, which is the context that actually explains how someone feels.",
+      "Health apps and symptom checkers treat every conversation as the first one. They ask the same questions each time and ignore sleep, stress, food, air quality and history, which is usually what explains how someone feels.",
+    approach:
+      "VitaSense keeps a long-term memory of each person. Onboarding records their life, food, medical and emotional context once, and daily check-ins and device signals build on it. A deterministic forecast engine predicts the next 24 to 72 hours from 30 days of signals and names the cause. A context engine gives the AI companion only the history that matters for the question, and a safety layer blocks diagnoses and catches emergencies before a reply is shown.",
+    outcome:
+      "At Avinya 2.0, a two-day hackathon, we took it from idea to a working demo and earned the jury's appreciation for its approach to context-aware, preventive care. The backend is covered by more than 100 tests across the forecast, safety and context paths.",
     built: [
       {
         lead: "A long-term health memory.",
@@ -297,10 +322,10 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "13", label: "memory tables" },
-      { value: "4", label: "daily signal streams" },
-      { value: "100+", label: "backend tests" },
-      { value: "SSE", label: "streamed AI replies" },
+      { value: "24–72 h", label: "forecast of readiness, energy and recovery, with the cause named" },
+      { value: "30 days", label: "of personal signals behind every prediction" },
+      { value: "Safety layer", label: "blocks diagnoses and catches emergencies on every reply" },
+      { value: "100+", label: "backend tests on the forecast, safety and context paths" },
     ],
     stack: ["Next.js", "React", "TypeScript", "FastAPI", "Supabase", "PostgreSQL", "Gemini / Grok", "Tailwind CSS"],
     media: [
@@ -327,7 +352,11 @@ export const projects: Project[] = [
     context: "Open source under the MIT licence",
     accent: "#7C3AED",
     problem:
-      "Obsidian keeps notes as Markdown files on your own disk, while Claude.ai and DeepSeek live in the browser. MCP lets an assistant use tools, but putting a local MCP server online normally means port forwarding, or a public URL that hands your whole vault to anyone who finds it.",
+      "Obsidian keeps notes as Markdown files on your own disk, while Claude.ai and DeepSeek run in the browser. MCP lets an assistant use tools, but putting a local MCP server online usually means opening a port on your router, or a public URL that hands your whole vault to anyone who finds it.",
+    approach:
+      "A small OAuth 2.1 gateway sits in front of a local Obsidian MCP server. Claude.ai signs in with PKCE and gets a short-lived JWT. DeepSeek has no MCP support, so it goes through a local proxy that adds a static key. A Cloudflare Tunnel gives the gateway a public HTTPS address, so nothing else on the laptop can be reached and no port is ever opened.",
+    outcome:
+      "Open source under the MIT licence. One command brings up the whole stack and prints the two URLs to paste into Claude and the browser extension. An end-to-end test covers discovery, registration, PKCE, single-use codes and both sign-in paths, and passes 14 of 14 checks.",
     built: [
       {
         lead: "An OAuth 2.1 server Claude can sign in to.",
@@ -347,10 +376,10 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "31", label: "vault tools exposed" },
-      { value: "2", label: "auth paths, one URL" },
-      { value: "0", label: "open ports" },
-      { value: "14/14", label: "end-to-end checks pass" },
+      { value: "OAuth 2.1", label: "PKCE, dynamic client registration and 12-hour JWTs" },
+      { value: "0 ports", label: "opened on the user's network" },
+      { value: "14 / 14", label: "end-to-end security checks passing" },
+      { value: "31 tools", label: "for Claude to search, read and edit the vault" },
     ],
     footnote: "The recordings use a demo vault made for this page, run through the real gateway and MCP server.",
     stack: ["Node.js", "Express", "OAuth 2.1 + PKCE", "JWT (jose)", "MCP over SSE", "Docker Compose", "Cloudflare Tunnel", "Bash"],
@@ -371,7 +400,11 @@ export const projects: Project[] = [
     role: "Designed and built solo",
     accent: "#16A34A",
     problem:
-      "Most workout apps need an account and a connection before you can log a single set, and they bury your progress under ads. Lifters want to log fast and see whether they are actually getting stronger.",
+      "Most workout apps want an account and a connection before you can log a single set, and the numbers that matter get buried. In a basement gym with no signal, logging fails at exactly the wrong moment, and lifters still can't tell whether they're getting stronger.",
+    approach:
+      "Wift is offline-first. All data lives in the browser's IndexedDB, so it opens instantly and logs with no network at all. Starting a routine pre-fills every set from your last best, a live session tracks time and total volume, and analytics show whether each lift is actually progressing. Google sign-in is optional and only syncs a snapshot between devices.",
+    outcome:
+      "Live on Vercel as an installable web app. Anyone can start logging straight away, without creating an account.",
     built: [
       {
         lead: "Works without a network.",
@@ -387,10 +420,10 @@ export const projects: Project[] = [
       },
     ],
     metrics: [
-      { value: "0", label: "accounts needed" },
-      { value: "6", label: "screens" },
-      { value: "CSV", label: "bulk exercise import" },
-      { value: "PWA", label: "installable" },
+      { value: "Offline", label: "every screen works with no network; data stays on the device" },
+      { value: "2 taps", label: "to log a set, pre-filled from your previous best" },
+      { value: "No sign-up", label: "needed to start; cloud sync is optional" },
+      { value: "PWA", label: "installs to a phone's home screen like an app" },
     ],
     stack: ["Next.js", "TypeScript", "Dexie (IndexedDB)", "Chart.js", "Supabase Auth", "Tailwind CSS", "Vercel"],
     media: [
@@ -408,6 +441,9 @@ export type ClientWork = {
   client: string;
   kind: string;
   period?: string;
+  /** The client's situation: what they needed and why. */
+  brief: string;
+  /** What I delivered. */
   text: string;
   points: string[];
   stack: string[];
@@ -420,11 +456,12 @@ export const clientWork: ClientWork[] = [
     name: "Omniwebora",
     client: "Digital solutions studio",
     kind: "Website",
-    text: "A cinematic, scroll-driven site for a studio that sells websites, apps, software and marketing. The home page is one continuous story: a generated push-in film opens it, nine chapters walk through what they do, and a stepper keeps visitors oriented.",
+    brief:
+      "A digital studio selling websites, apps, software and marketing needed a site that shows the quality of its own work and explains a broad offer clearly to first-time visitors.",
+    text: "I built a cinematic, scroll-driven site that tells the offer as one continuous story: a generated push-in film opens it, nine chapters walk through what the studio does, and a stepper keeps visitors oriented. Every claim on the page is traced to the client's own brochure.",
     points: [
-      "Every claim traced to the client's own brochure, nothing invented",
-      "Solutions, approach, pricing and contact pages",
-      "Playwright and Vitest checks before every release",
+      "Solutions, approach, pricing and contact pages, written from the client's material",
+      "Playwright and Vitest checks run before every release",
     ],
     stack: ["Next.js", "TypeScript", "Framer Motion", "Higgsfield", "Playwright"],
     media: { src: "/media/client-omniwebora.webp", video: "/media/client-omniwebora.mp4", caption: "Omniwebora home page" },
@@ -434,10 +471,12 @@ export const clientWork: ClientWork[] = [
     name: "Shyama's Organic Foods",
     client: "Home-made thokku brand, Chennai",
     kind: "E-commerce",
-    text: "An online store for a family brand that slow-cooks organic thokku. Customers browse the menu, pay with Razorpay and track their order; the owner runs everything from an admin dashboard, and the whole site switches between English and Tamil.",
+    brief:
+      "A family brand that slow-cooks organic thokku wanted to sell directly online, with payments and order tracking, to customers who are often more at home in Tamil than in English.",
+    text: "I built an online store where customers browse the menu, pay with Razorpay and track their order, while the owner runs orders and the menu from one admin dashboard. The whole site switches between English and Tamil for the brand's customers.",
     points: [
-      "Live open and closed status from the shop's hours",
       "Accounts, cart, checkout and order tracking",
+      "Live open and closed status worked out from the shop's hours",
       "Admin dashboard for orders and the menu",
     ],
     stack: ["Next.js", "TypeScript", "Supabase", "Razorpay", "Tailwind CSS"],
@@ -447,11 +486,13 @@ export const clientWork: ClientWork[] = [
     name: "Menaka's Home Foods",
     client: "Home-food kitchen",
     kind: "Mobile app",
-    text: "A Flutter app that runs a home kitchen end to end. Customers order meals or subscribe to a daily plan, a nightly job turns tomorrow's subscriptions into orders, the owner manages the menu and the day's operations, and riders pick up, deliver and share live location.",
+    brief:
+      "A home kitchen that serves daily meal subscriptions needed one app that connects its customers, the kitchen and its delivery riders, so each day's orders are known in advance and every delivery can be followed.",
+    text: "I built one Flutter app that runs the kitchen end to end. Customers order a meal or subscribe to a daily plan, a nightly job turns tomorrow's subscriptions into orders, the owner manages the menu and the day's operations, and riders pick up, deliver and share their live location.",
     points: [
       "Three roles in one app: customer, owner and rider",
       "OTP sign-in through a Supabase edge function",
-      "Row-level security hardened across 20 migrations",
+      "Row-level security hardened across 20 database migrations",
     ],
     stack: ["Flutter", "Dart", "Supabase", "PostgreSQL", "Google Maps", "fl_chart"],
     media: { src: "/media/client-menakas.webp", video: "/media/client-menakas.mp4", caption: "Menaka's Home Foods: sign-in, the customer home, the rider app and the owner's dashboard" },

@@ -77,18 +77,37 @@ function ProjectCase({ p }: { p: Project }) {
         <Gallery media={p.media} label={`${p.name.toLowerCase()} — ${p.tagline.toLowerCase()}`} />
       </Reveal>
 
-      <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-5">
-          <h4 className="label text-muted">The problem</h4>
-          <p className="mt-4 text-[17px] leading-relaxed text-ink-2">{p.problem}</p>
+      {/* Case summary: the three things a reviewer looks for first */}
+      <Reveal className="mt-14">
+        <div className="grid border-y border-line lg:grid-cols-3">
+          {(
+            [
+              ["The problem", p.problem],
+              ["What I built", p.approach],
+              ["The outcome", p.outcome],
+            ] as const
+          ).map(([k, v], i) => (
+            <div key={k} className={`py-7 lg:py-9 lg:pr-8 ${i > 0 ? "border-t border-line lg:border-l lg:border-t-0 lg:pl-8" : ""}`}>
+              <h4 className="label flex items-center gap-2 text-muted">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--acc)]" />
+                {k}
+              </h4>
+              <p className="mt-3 text-[16px] leading-relaxed text-ink-2">{v}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
 
-          <dl className="mt-9 grid grid-cols-2 border-l border-t border-line">
+      <div className="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-5">
+          <h4 className="label text-muted">Results</h4>
+          <dl className="mt-4 grid grid-cols-2 border-l border-t border-line">
             {p.metrics.map((m) => (
               <div key={m.label} className="border-b border-r border-line p-5">
                 <dt className="sr-only">{m.label}</dt>
                 <dd>
-                  <span className="display block text-[2.4rem] text-ink">{m.value}</span>
-                  <span className="mt-2 block text-[13px] text-muted">{m.label}</span>
+                  <span className="display block text-[2rem] text-ink sm:text-[2.2rem]">{m.value}</span>
+                  <span className="mt-2 block text-[13px] leading-snug text-muted">{m.label}</span>
                 </dd>
               </div>
             ))}
@@ -106,7 +125,7 @@ function ProjectCase({ p }: { p: Project }) {
         </Reveal>
 
         <Reveal className="lg:col-span-7" delay={0.08}>
-          <h4 className="label text-muted">What I built</h4>
+          <h4 className="label text-muted">How it works</h4>
           <ol className="mt-4 divide-y divide-line">
             {p.built.map((b, i) => (
               <li key={b.lead} className="grid grid-cols-[2.25rem_1fr] gap-3 py-5 first:pt-2">

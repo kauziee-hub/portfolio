@@ -98,7 +98,7 @@ export function Nav() {
               href="#contact"
               className="label group hidden items-center gap-2 rounded-full bg-ink px-5 py-3 text-paper transition-colors hover:bg-accent sm:inline-flex"
             >
-              Let&apos;s talk
+              Contact
               <ArrowRight width={14} height={14} className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <button

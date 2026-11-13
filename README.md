@@ -29,4 +29,4 @@ The résumé served by the download buttons is `public/Kausik_Ganapathy_Hari_Res
 
 ## Deploy
 
-Hosted on Vercel. Set `NEXT_PUBLIC_SITE_URL` to the live address so link previews show the right image.
+Hosted on Vercel at https://kausik.vercel.app. `NEXT_PUBLIC_SITE_URL` is set to that address so link previews show the right image.
