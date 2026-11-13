@@ -46,7 +46,7 @@ export const profile = {
 
 export const heroStats = [
   { value: "2", suffix: "×", label: "Hackathon prize winner" },
-  { value: "6", suffix: "", label: "Systems built end to end" },
+  { value: "7", suffix: "", label: "Systems built end to end" },
   { value: "33", suffix: "", label: "Modules live in Locah" },
 ];
 
@@ -306,8 +306,53 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "wift",
+    id: "obsidian-mcp",
     index: "06",
+    name: "Obsidian MCP Gateway",
+    tagline: "Claude and DeepSeek, working inside a local Obsidian vault",
+    hook: "The notes never leave the laptop, yet Claude.ai can search, read and write them, with no open ports.",
+    period: "Oct 2026",
+    role: "Co-built with Gowtham Rayapureddi",
+    context: "Open source under the MIT licence",
+    accent: "#7C3AED",
+    problem:
+      "Obsidian keeps notes as Markdown files on your own disk, while Claude.ai and DeepSeek live in the browser. MCP lets an assistant use tools, but putting a local MCP server online normally means port forwarding, or a public URL that hands your whole vault to anyone who finds it.",
+    built: [
+      {
+        lead: "An OAuth 2.1 server Claude can sign in to.",
+        text: "A single Express service handles discovery, dynamic client registration, a password login page and a PKCE S256 code exchange that returns a signed 12-hour JWT. Codes are single-use and expire in 60 seconds, comparisons are timing-safe, and the login allows 10 tries every 10 minutes.",
+      },
+      {
+        lead: "Two ways in, one URL.",
+        text: "Claude connects with OAuth. DeepSeek has no MCP support, so it goes through the MCP SuperAssistant extension and a local proxy that adds a static API key. Every request to the MCP endpoints must carry one or the other; anything else gets a 401 that starts Claude's sign-in.",
+      },
+      {
+        lead: "Nothing exposed but the gateway.",
+        text: "A Cloudflare Tunnel gives the gateway a public https address while the Obsidian MCP server (an open-source server with 31 vault tools) and the proxy listen only on localhost. The proxy streams SSE unbuffered with no timeouts, so long tool calls don't drop.",
+      },
+      {
+        lead: "One command to run it.",
+        text: "start.sh checks the setup, then starts the MCP server on the vault, the tunnel, the gateway and the proxy in order, waits for each to report healthy, and prints the two URLs to paste into Claude and the extension. An end-to-end script tests the full sign-in flow against a mock server.",
+      },
+    ],
+    metrics: [
+      { value: "31", label: "vault tools exposed" },
+      { value: "2", label: "auth paths, one URL" },
+      { value: "0", label: "open ports" },
+      { value: "14/14", label: "end-to-end checks pass" },
+    ],
+    footnote: "The recordings use a demo vault made for this page, run through the real gateway and MCP server.",
+    stack: ["Node.js", "Express", "OAuth 2.1 + PKCE", "JWT (jose)", "MCP over SSE", "Docker Compose", "Cloudflare Tunnel", "Bash"],
+    media: [
+      { src: "/media/obsidian-gateway.webp", video: "/media/obsidian-gateway.mp4", caption: "A live run: a request with no token is refused, Claude signs in with OAuth 2.1, then searches, reads and writes notes" },
+      { src: "/media/obsidian-signin.webp", video: "/media/obsidian-signin.mp4", caption: "The gateway's sign-in page: a wrong password is refused, the right one connects and 31 tools appear" },
+      { src: "/images/work/obsidian-mcp/tests.webp", caption: "The end-to-end test: discovery, registration, PKCE, single-use codes and both auth paths, 14 of 14 passing" },
+    ],
+    links: [{ label: "Source", href: "https://github.com/Gowtham640/Obsidian-MCP", kind: "code" }],
+  },
+  {
+    id: "wift",
+    index: "07",
     name: "Wift",
     tagline: "An offline-first gym tracker",
     hook: "Log a set in two taps, even with no signal in the basement gym.",
@@ -560,8 +605,8 @@ export const education = [
 export const skills = [
   {
     group: "AI agents & LLMs",
-    items: ["Agentic AI", "LLM tool calling", "LangGraph", "Gemini API", "Context retrieval"],
-    proof: "Locah, Vigil, OILINTELLIGENCE, VitaSense",
+    items: ["Agentic AI", "LLM tool calling", "Model Context Protocol (MCP)", "LangGraph", "Gemini API", "Context retrieval"],
+    proof: "Locah, Vigil, OILINTELLIGENCE, VitaSense, Obsidian MCP",
   },
   {
     group: "Machine learning",
@@ -570,13 +615,13 @@ export const skills = [
   },
   {
     group: "Cloud & DevOps",
-    items: ["AWS (ECS, RDS, S3, IAM, CloudWatch)", "Docker", "GitHub Actions", "Vercel", "Railway", "Supabase"],
-    proof: "UniTask, Locah, Wift",
+    items: ["AWS (ECS, RDS, S3, IAM, CloudWatch)", "Docker", "GitHub Actions", "Cloudflare Tunnel", "Vercel", "Railway", "Supabase"],
+    proof: "UniTask, Locah, Obsidian MCP, Wift",
   },
   {
     group: "Backend",
-    items: ["Python", "FastAPI", "Flask", "Node.js", "REST APIs", "WebSockets", "PostgreSQL", "TimescaleDB", "MQTT", "OPC UA"],
-    proof: "Locah, Vigil, OILINTELLIGENCE, UniTask",
+    items: ["Python", "FastAPI", "Flask", "Node.js", "Express", "REST APIs", "OAuth 2.1", "WebSockets", "PostgreSQL", "TimescaleDB", "MQTT", "OPC UA"],
+    proof: "Locah, Vigil, OILINTELLIGENCE, UniTask, Obsidian MCP",
   },
   {
     group: "Frontend & mobile",
