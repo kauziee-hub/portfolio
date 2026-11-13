@@ -47,22 +47,6 @@ export const profile = {
     "Third-year Computer Science student at VIT Chennai (graduating 2028) and BS Data Science student at IIT Madras, building AI products end to end.",
 };
 
-/** Hero credentials: things a recruiter can check, not vanity counts. */
-export const heroCredentials = [
-  { value: "1st prize", label: "VISAI 2025, international project competition" },
-  { value: "Finalist", label: "Grand finales of Indian Bank IntelliTrace and TSM‑Technova 2026" },
-  { value: "8.50 CGPA", label: "3rd year, B.Tech CSE at VIT Chennai" },
-  { value: "Since 2025", label: "Freelance software for paying clients" },
-];
-
-/** What I do, shown under the hero as four columns. */
-export const capabilities = [
-  { title: "AI & machine learning", text: "Models that make a decision and show their evidence: graph ML, gradient boosting, SHAP." },
-  { title: "Agents & LLM tools", text: "Assistants that act only through guarded tools, MCP servers and context retrieval." },
-  { title: "Full-stack products", text: "Next.js, FastAPI and Flutter apps, designed and shipped from first sketch to launch." },
-  { title: "Cloud & DevOps", text: "AWS, Docker and CI pipelines that are secure and cheap to run by default." },
-];
-
 export const about = {
   heading: "I build software that has to make real decisions.",
   lead:

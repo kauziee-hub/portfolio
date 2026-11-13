@@ -55,13 +55,10 @@ function ProjectCase({ p }: { p: Project }) {
           </div>
           <div className="flex flex-col gap-4 lg:col-span-4 lg:items-end">
             {p.recognition && (
-              <ul className="flex flex-col gap-2 lg:items-end">
+              <ul className="flex flex-col gap-1.5 lg:items-end lg:text-right">
                 {p.recognition.map((r) => (
-                  <li
-                    key={r}
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-line-strong bg-surface px-3.5 py-1.5 text-[13px] font-medium text-ink"
-                  >
-                    <Trophy width={14} height={14} className="text-accent" />
+                  <li key={r} className="inline-flex items-center gap-2 text-[13px] font-medium text-ink-2">
+                    <Trophy width={13} height={13} className="shrink-0 text-ink" />
                     {r}
                   </li>
                 ))}
@@ -71,7 +68,7 @@ function ProjectCase({ p }: { p: Project }) {
           </div>
         </div>
 
-        <p className="mt-10 max-w-3xl border-l-2 border-[var(--acc)] pl-5 font-serif text-[1.65rem] leading-snug text-ink sm:text-[2rem]">
+        <p className="mt-10 max-w-4xl text-[1.7rem] font-extralight leading-[1.2] tracking-[-0.03em] text-ink sm:text-[2.4rem]">
           {p.hook}
         </p>
       </Reveal>

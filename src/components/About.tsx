@@ -22,7 +22,7 @@ export function About() {
         </Reveal>
 
         <Reveal delay={0.08} className="lg:col-span-6 lg:pt-2">
-          <p className="font-serif text-[1.65rem] leading-[1.25] text-ink sm:text-[1.9rem]">{about.lead}</p>
+          <p className="text-[1.55rem] font-light leading-[1.3] tracking-[-0.02em] text-ink sm:text-[1.8rem]">{about.lead}</p>
           <div className="mt-6 space-y-4 text-[16px] leading-relaxed text-muted">
             {about.body.map((p) => (
               <p key={p.slice(0, 24)}>{p}</p>

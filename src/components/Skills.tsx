@@ -19,7 +19,7 @@ export function Skills() {
       <div className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
         {skills.map((g, i) => (
           <Reveal key={g.group} delay={(i % 3) * 0.05} className="flex flex-col border-b border-r border-line p-6 sm:p-8">
-            <h3 className="display text-[1.75rem] text-ink">{g.group}</h3>
+            <h3 className="text-[15px] font-semibold uppercase tracking-[0.06em] text-ink">{g.group}</h3>
             <ul className="mt-5 flex flex-1 flex-wrap content-start gap-x-2 gap-y-2">
               {g.items.map((s) => (
                 <li key={s} className="rounded-full border border-line bg-surface px-3 py-1 text-[13px] text-ink-2">
