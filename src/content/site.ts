@@ -312,7 +312,7 @@ export const projects: Project[] = [
     tagline: "Claude and DeepSeek, working inside a local Obsidian vault",
     hook: "The notes never leave the laptop, yet Claude.ai can search, read and write them, with no open ports.",
     period: "Oct 2026",
-    role: "Co-built with Gowtham Rayapureddi",
+    role: "Built end to end · open-sourced with Gowtham Rayapureddi",
     context: "Open source under the MIT licence",
     accent: "#7C3AED",
     problem:
