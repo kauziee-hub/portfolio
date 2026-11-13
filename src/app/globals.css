@@ -76,12 +76,16 @@ body {
   background-position: 100% 100%;
 }
 
-/* Soft window-light pattern behind the hero portrait */
-.window-light {
+/* Studio light behind the hero portrait: a soft pool of warm grey on the page itself, no frame */
+.hero-glow {
   background:
-    linear-gradient(115deg, transparent 0 18%, rgb(255 255 255 / 0.32) 18% 27%, transparent 27% 31%, rgb(255 255 255 / 0.26) 31% 40%, transparent 40%),
-    radial-gradient(120% 80% at 80% 0%, #efe9df 0%, transparent 60%),
-    linear-gradient(180deg, #e6dfd3 0%, #d9d0c2 100%);
+    radial-gradient(44% 50% at 50% 44%, rgb(225 216 202 / 0.9) 0%, rgb(232 225 214 / 0.55) 45%, transparent 75%);
+}
+
+/* Fade the portrait's sides into the page so it never reads as a pasted rectangle */
+.hero-photo {
+  -webkit-mask-image: linear-gradient(to right, transparent 2%, #000 13%, #000 87%, transparent 98%);
+  mask-image: linear-gradient(to right, transparent 2%, #000 13%, #000 87%, transparent 98%);
 }
 
 /* Fine paper grain over large flat areas */

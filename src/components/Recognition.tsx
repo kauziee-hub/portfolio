@@ -1,7 +1,7 @@
 "use client";
 
 import { recognition, technovaShortlist, type Media, type Recognition as R } from "@/content/site";
-import { ArrowRight, Expand, Trophy } from "./ui/Icons";
+import { ArrowRight, ArrowUpRight, Expand, Trophy } from "./ui/Icons";
 import { useLightbox } from "./ui/Lightbox";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
@@ -122,6 +122,16 @@ export function Recognition() {
                       >
                         Project: <span className="link-underline text-white">{r.project}</span>
                         <ArrowRight width={13} height={13} />
+                      </a>
+                    ) : r.projectUrl ? (
+                      <a
+                        href={r.projectUrl}
+                        target="_blank"
+                        rel="noopener"
+                        className="label mt-6 inline-flex items-center gap-2 text-white/70 transition-colors hover:text-white"
+                      >
+                        Project: <span className="link-underline text-white">{r.project}</span> · Source
+                        <ArrowUpRight width={13} height={13} />
                       </a>
                     ) : (
                       <p className="label mt-6 text-white/50">

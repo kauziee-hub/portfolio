@@ -38,16 +38,17 @@ export const profile = {
   github: "https://github.com/kauziee-hub",
   githubHandle: "kauziee-hub",
   resume: "/Kausik_Ganapathy_Hari_Resume.pdf",
-  photo: "/images/profile/kausik-cutout.webp",
+  photo: "/images/profile/kausik-hero.webp",
   photoFull: "/images/profile/kausik.webp",
+  heroLine: "Computer Science at VIT Chennai and Data Science at IIT Madras. Founder of Locah. I build the model, the backend and the interface.",
   summary:
     "Computer Science at VIT Chennai, Data Science at IIT Madras, founder of Locah. I build the models, the backend and the interface people actually use, from fraud checks that run before money moves to AI staff for small shops.",
 };
 
 export const heroStats = [
-  { value: "2", suffix: "×", label: "Hackathon prize winner" },
-  { value: "7", suffix: "", label: "Systems built end to end" },
-  { value: "33", suffix: "", label: "Modules live in Locah" },
+  { value: "2", suffix: "×", label: "Hackathon prizes" },
+  { value: "7", suffix: "", label: "Systems shipped" },
+  { value: "33", suffix: "", label: "Modules in Locah" },
 ];
 
 export const recognisedAt = [
@@ -301,9 +302,16 @@ export const projects: Project[] = [
     stack: ["Next.js", "React", "TypeScript", "FastAPI", "Supabase", "PostgreSQL", "Gemini / Grok", "Tailwind CSS"],
     media: [
       { src: "/media/vitasense-walkthrough.webp", video: "/media/vitasense-walkthrough.mp4", caption: "The daily forecast, the physiology map and locality health intelligence" },
-      { src: "/images/work/vitasense/dashboard.webp", caption: "Dashboard: the predictive wellness forecast and engine scores" },
-      { src: "/images/work/vitasense/area-map.webp", caption: "Locality health intelligence around the user" },
+      { src: "/images/work/vitasense/dashboard.webp", caption: "The wellness forecast: a 48-hour prediction, readiness score and the engines behind it" },
+      { src: "/images/work/vitasense/causal-forecast.webp", caption: "Why it's happening: a causal timeline from 30 days of signals, and what to expect in the next 24 to 72 hours" },
+      { src: "/images/work/vitasense/physiology-map.webp", caption: "Physiology map: eight body systems scored against the user's own monthly baseline" },
+      { src: "/images/work/vitasense/adaptive-plan.webp", caption: "Personal patterns, an adaptive plan for the day and a live local watch layer" },
+      { src: "/images/work/vitasense/area-map.webp", caption: "Area health map: disease, symptom and hazard signals within 3 km" },
+      { src: "/images/work/vitasense/daily-routine.webp", caption: "Daily routine: quick check-ins for food, mood, body and events that feed the forecast" },
+      { src: "/images/work/vitasense/chat.webp", caption: "The health companion, with a medical safety layer that blocks diagnoses and catches emergencies (demo conversation)" },
+      { src: "/images/work/vitasense/welcome.webp", caption: "Welcome screen" },
     ],
+    links: [{ label: "Source", href: gh("VitaSense-AI"), kind: "code" }],
   },
   {
     id: "obsidian-mcp",
@@ -455,6 +463,8 @@ export type Recognition = {
   date: string;
   project: string;
   projectId?: string;
+  /** External link (e.g. the repo) for a project that has no case study on this page. */
+  projectUrl?: string;
   text: string;
   photos: Media[];
 };
@@ -467,6 +477,7 @@ export const recognition: Recognition[] = [
     event: "Vel Tech R&D Institute, Chennai, with the Indian National Commission for Cooperation with UNESCO",
     date: "24 Feb 2025",
     project: "CityFix",
+    projectUrl: gh("CityFix"),
     text: "We won first prize in the Hackathon category with CityFix, built for a problem statement set by Renault-Nissan. Citizens drop a pin to report a civic issue, and a routing engine finds the ward, the department and the best worker for it. It was our first hackathon win.",
     photos: [
       { src: "/images/recognition/visai-stage.webp", caption: "Receiving first prize on stage at VISAI 2025" },
