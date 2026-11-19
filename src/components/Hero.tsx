@@ -98,7 +98,7 @@ export function Hero() {
           {/* Portrait: an arch window rising from the bottom edge */}
           <div className="relative mt-12 lg:col-span-5 lg:mt-0">
             <motion.div
-              className="relative mx-auto h-[min(118vw,520px)] w-[min(84vw,400px)] overflow-hidden rounded-t-full bg-[#f3eade] lg:absolute lg:bottom-0 lg:right-0 lg:h-[min(80svh,700px)] lg:w-[min(100%,440px)]"
+              className="relative mx-auto h-[min(118vw,520px)] w-[min(84vw,400px)] overflow-hidden rounded-t-full bg-[#2d2726] lg:absolute lg:bottom-0 lg:right-0 lg:h-[min(80svh,700px)] lg:w-[min(100%,440px)]"
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.2, ease }}
@@ -108,7 +108,7 @@ export function Hero() {
                 alt={`Portrait of ${profile.name}`}
                 fetchPriority="high"
                 style={{ y: photoY }}
-                className="absolute inset-x-0 top-0 h-[104%] w-full object-cover object-[50%_4%]"
+                className="absolute inset-x-0 top-0 h-[104%] w-full object-cover object-[50%_8%]"
               />
             </motion.div>
           </div>

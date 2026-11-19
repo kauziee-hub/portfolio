@@ -43,21 +43,21 @@ export const profile = {
   github: "https://github.com/kauziee-hub",
   githubHandle: "kauziee-hub",
   resume: "/Kausik_Ganapathy_Hari_Resume.pdf",
-  // Studio portrait made with Higgsfield from Kausik's own photos (face kept as in kausik.webp).
-  photo: "/images/profile/kausik-arch.webp",
-  photoFull: "/images/profile/kausik.webp",
+  // Kausik's own studio portrait.
+  photo: "/images/profile/kausik-portrait.webp",
+  photoFull: "/images/profile/kausik-portrait.webp",
   heroLine:
-    "Third-year Computer Science student at VIT Chennai, graduating in 2028, and studying Data Science at IIT Madras alongside. I design and ship AI products end to end, from fraud detection that acts before money moves to apps small businesses run every day.",
+    "Third-year Computer Science student at VIT Chennai, graduating in 2028, with a concurrent BS in Data Science at IIT Madras. I build AI products end to end, from the data pipeline and model to the backend, the interface and the cloud deployment, focusing on AI that's explainable and safe to rely on.",
   summary:
-    "Third-year Computer Science student at VIT Chennai (graduating 2028) and BS Data Science student at IIT Madras, building AI products end to end.",
+    "Third-year Computer Science student at VIT Chennai (graduating 2028) and BS Data Science student at IIT Madras, building explainable AI products end to end across healthcare, fintech and industrial monitoring.",
 };
 
 export const about = {
   heading: "I build software that has to make real decisions.",
   lead:
-    "I'm Kausik, a third-year computer science student at VIT Chennai. The problems I enjoy are the ones where a wrong answer costs something: a scam payment, a leaking pipeline, a shop that runs out of stock.",
+    "I'm Kausik, a third-year computer science student at VIT Chennai. The problems I enjoy are the ones where a wrong answer costs something: a scam payment, a leaking pipeline, a missed symptom, a shop that runs out of stock.",
   body: [
-    "I've freelanced since January 2025 for food, retail and service businesses, and every client came from my own outreach. I also founded Locah, an AI operating system for local shops, and pitched it at a national startup challenge in Madurai.",
+    "I've freelanced since January 2025, building web and mobile apps for food-retail, real-estate and fitness businesses, and every client came from my own outreach. I also founded Locah, an AI operating system for local shops, and pitched it at a national startup challenge in Madurai.",
     "Alongside my degree I'm doing a BS in Data Science and Applications at IIT Madras, which is where most of the maths behind my models comes from.",
   ],
   facts: [
@@ -190,13 +190,13 @@ export const projects: Project[] = [
     problem:
       "Most local shops in India run on WhatsApp, a paper credit book and the owner's memory. Business software assumes an owner with spare time, a laptop and fluent English, so the shops that would gain the most from it are the least likely to use it.",
     approach:
-      "Locah turns a conversation into a running business. The owner describes the shop in English, Tamil or Tanglish. Locah generates the website, lists it on a local marketplace and sets up a workspace with only the tools that kind of shop needs, from counter billing and stock to a credit book and WhatsApp orders. AI staff take on the repetitive work within permissions the owner sets, and answer only from the shop's own records, so they can't invent a price.",
+      "Locah turns a conversation into a running business. The owner describes the shop in English, Tamil or Hindi. Locah generates the website, lists it on a local marketplace and sets up a workspace with only the tools that kind of shop needs, from counter billing and stock to a credit book and WhatsApp orders. AI staff take on the repetitive work within permissions the owner sets, and answer only from the shop's own records, so they can't invent a price.",
     outcome:
       "Running as a multi-tenant platform: three Next.js apps, a FastAPI API and a background worker, with row-level security keeping every shop's data separate. Our team, The Think Tank, took Locah through the Chennai zonal round to the National Grand Finale of TSM-Technova 2026 in Madurai and pitched it to the jury and incubation mentors.",
     built: [
       {
         lead: "Onboarding is a conversation.",
-        text: "The owner talks about their business in English, Tamil or Tanglish. Locah builds their website, lists them on a local Marketplace and sets up a Workspace with the tools that kind of business needs.",
+        text: "The owner talks about their business in English, Tamil or Hindi. Locah builds their website, lists them on a local Marketplace and sets up a Workspace with the tools that kind of business needs.",
       },
       {
         lead: "33 modules, each switched on by the owner.",
@@ -213,7 +213,7 @@ export const projects: Project[] = [
     ],
     metrics: [
       { value: "Finale", label: "TSM-Technova 2026, national AI innovation challenge" },
-      { value: "3 languages", label: "onboarding in English, Tamil or Tanglish" },
+      { value: "3 languages", label: "onboarding in English, Tamil or Hindi" },
       { value: "Isolated", label: "row-level security keeps every shop's data separate" },
       { value: "Owner-gated", label: "AI staff act within set permissions, with a kill switch" },
     ],
@@ -391,8 +391,55 @@ export const projects: Project[] = [
     links: [{ label: "Source", href: "https://github.com/Gowtham640/Obsidian-MCP", kind: "code" }],
   },
   {
-    id: "wift",
+    id: "finance-tracker",
     index: "07",
+    name: "Finance Tracker",
+    tagline: "Expense tracking that fills itself in from bank alert emails",
+    hook: "Every card swipe and UPI payment shows up on its own, already categorised, without typing a thing.",
+    period: "Aug 2026",
+    role: "Designed and built solo",
+    accent: "#22C55E",
+    problem:
+      "Expense apps only work if you enter every payment by hand, and most people give up within a week. Yet the bank already emails an alert for every debit, credit and balance change, so the data exists. It's just sitting unread in an inbox.",
+    approach:
+      "A background worker reads those alert emails every 30 minutes through read-only Gmail access, picks out the amount, merchant, balance and any failed payment, and records them automatically. The app itself is offline-first: everything is stored on the phone, works with no signal and syncs when the connection is back. It learns categories from your corrections, so the same shop is filed correctly next time.",
+    outcome:
+      "Runs as a self-hosted service: a FastAPI backend and the email worker run as two systemd services on a home machine, reached privately over Tailscale, with balance history rebuilt from past alerts.",
+    built: [
+      {
+        lead: "From inbox to ledger.",
+        text: "Google sign-in asks only for the gmail.readonly scope. The worker fetches new HDFC Bank alerts since its last run, parses debits, credits, balance updates and failed transactions, removes duplicates by their reference number, and backfills the balance history.",
+      },
+      {
+        lead: "Offline-first on the phone.",
+        text: "Transactions, accounts and balances live in IndexedDB, so the app opens instantly and records a cash spend with no signal. Changes made offline are queued and merged with the server on the next sync.",
+      },
+      {
+        lead: "Categories that learn.",
+        text: "A merchant trie powers autocomplete, and every correction is saved as a merchant-to-category rule that syncs between devices, so the same shop is filed correctly from then on.",
+      },
+      {
+        lead: "Analytics that answer questions.",
+        text: "Monthly incoming against outgoing, spending over 7, 30 or 90 days or a custom range, a breakdown by category, and split transactions for shared bills.",
+      },
+    ],
+    metrics: [
+      { value: "Automatic", label: "payments recorded from bank alerts, no manual entry" },
+      { value: "30 min", label: "between inbox checks by the background worker" },
+      { value: "Read-only", label: "Gmail access: it can read alerts, never send or delete" },
+      { value: "Offline", label: "logging and browsing work with no network" },
+    ],
+    footnote: "The screens on this page use fictional demo data. No real bank information is shown.",
+    stack: ["Python", "FastAPI", "Gmail API (OAuth)", "APScheduler", "PostgreSQL (Supabase)", "Next.js", "TypeScript", "IndexedDB", "Recharts", "Tailwind CSS", "systemd", "Tailscale"],
+    media: [
+      { src: "/media/finance-walkthrough.webp", video: "/media/finance-walkthrough.mp4", caption: "The month's transactions, balances by account and spending analytics (fictional demo data)" },
+      { src: "/images/work/finance/showcase.webp", caption: "Transactions, balances and spending by category (fictional demo data)" },
+    ],
+    links: [{ label: "Source", href: gh("Finance-tracker"), kind: "code" }],
+  },
+  {
+    id: "wift",
+    index: "08",
     name: "Wift",
     tagline: "An offline-first gym tracker",
     hook: "Log a set in two taps, even with no signal in the basement gym.",
@@ -481,6 +528,7 @@ export const clientWork: ClientWork[] = [
     ],
     stack: ["Next.js", "TypeScript", "Supabase", "Razorpay", "Tailwind CSS"],
     media: { src: "/media/client-shyamas.webp", video: "/media/client-shyamas.mp4", caption: "Shyama's Organic Foods storefront" },
+    link: { label: "shyamasorganicfoods.com", href: "https://www.shyamasorganicfoods.com" },
   },
   {
     name: "Menaka's Home Foods",
@@ -625,7 +673,7 @@ export const experience = [
     org: "Independent",
     period: "Jan 2025 – Present",
     place: "Remote / Chennai",
-    text: "Web and mobile apps for food-retail, fitness and service businesses, from requirements to post-launch support. I win every client myself through cold outreach and referrals, with live projects as the portfolio.",
+    text: "I design, build and deploy web and mobile apps for food-retail, real-estate and fitness businesses, from requirements to post-launch support. I find every client myself through cold outreach and referrals.",
   },
   {
     title: "Technical Volunteer",
@@ -657,35 +705,67 @@ export const education = [
   },
 ];
 
+export const certifications = [
+  {
+    title: "Artificial Intelligence and Machine Learning with Python",
+    issuer: "Livewire",
+    detail:
+      "Python, NumPy, Pandas and Matplotlib; supervised and unsupervised learning; neural networks (ANN, CNN, RNN) with TensorFlow and Keras; computer vision with OpenCV; NLP with NLTK; reinforcement learning.",
+  },
+];
+
 export const skills = [
   {
-    group: "AI agents & LLMs",
-    items: ["Agentic AI", "LLM tool calling", "Model Context Protocol (MCP)", "LangGraph", "Gemini API", "Context retrieval"],
-    proof: "Locah, Vigil, OILINTELLIGENCE, VitaSense, Obsidian MCP",
+    group: "Languages",
+    items: ["Python", "Java", "C++", "JavaScript", "TypeScript", "SQL"],
+    proof: "Projects and coursework",
   },
   {
     group: "Machine learning",
-    items: ["scikit-learn", "XGBoost", "PyTorch", "Graph neural networks", "SHAP", "NetworkX", "Pandas", "NumPy", "OpenCV"],
-    proof: "Vigil, OILINTELLIGENCE",
+    items: [
+      "Linear & logistic regression",
+      "KNN",
+      "Decision trees",
+      "Random Forest",
+      "SVM",
+      "Naive Bayes",
+      "XGBoost",
+      "K-Means",
+      "Q-Learning",
+      "Feature engineering",
+      "Model evaluation",
+      "SHAP",
+    ],
+    proof: "Vigil, OILINTELLIGENCE, Livewire certification",
   },
   {
-    group: "Cloud & DevOps",
-    items: ["AWS (ECS, RDS, S3, IAM, CloudWatch)", "Docker", "GitHub Actions", "Cloudflare Tunnel", "Vercel", "Railway", "Supabase"],
-    proof: "UniTask, Locah, Obsidian MCP, Wift",
+    group: "Deep learning",
+    items: ["ANN", "CNN", "RNN / LSTM", "Graph attention networks", "TensorFlow", "Keras", "PyTorch", "OpenCV", "NLTK"],
+    proof: "Vigil, Livewire certification",
   },
   {
-    group: "Backend",
-    items: ["Python", "FastAPI", "Flask", "Node.js", "Express", "REST APIs", "OAuth 2.1", "WebSockets", "PostgreSQL", "TimescaleDB", "MQTT", "OPC UA"],
-    proof: "Locah, Vigil, OILINTELLIGENCE, UniTask, Obsidian MCP",
+    group: "Generative & agentic AI",
+    items: ["Gemini API", "Prompt engineering", "RAG", "Agents with tool calling", "LangGraph", "Model Context Protocol (MCP)"],
+    proof: "Locah, Vigil, OILINTELLIGENCE, VitaSense, Obsidian MCP",
   },
   {
-    group: "Frontend & mobile",
-    items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js", "React Three Fiber", "Flutter"],
+    group: "Data science",
+    items: ["scikit-learn", "Pandas", "NumPy", "Matplotlib", "Jupyter"],
+    proof: "Vigil, OILINTELLIGENCE, IIT Madras coursework",
+  },
+  {
+    group: "Full-stack",
+    items: ["React", "Next.js", "Node.js", "Express", "FastAPI", "REST APIs", "WebSockets", "HTML", "CSS", "Tailwind CSS"],
     proof: "Every project on this page",
   },
   {
-    group: "Languages",
-    items: ["Python", "TypeScript", "JavaScript", "SQL", "Dart", "C++", "Java"],
-    proof: "Projects and coursework",
+    group: "Databases & cloud",
+    items: ["PostgreSQL", "Supabase", "AWS (ECS Fargate, RDS, S3, IAM, CloudWatch)", "Docker", "GitHub Actions (CI/CD)", "Git", "Linux", "Vercel"],
+    proof: "UniTask, Locah, Finance Tracker, Wift",
+  },
+  {
+    group: "Also shipped with",
+    items: ["TimescaleDB", "MQTT", "OPC UA", "Gmail API", "OAuth 2.1", "Cloudflare Tunnel", "Three.js", "Flutter", "Dart", "Railway"],
+    proof: "OILINTELLIGENCE, Finance Tracker, Obsidian MCP, Vigil, client work",
   },
 ];

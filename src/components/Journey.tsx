@@ -1,4 +1,4 @@
-import { education, experience } from "@/content/site";
+import { certifications, education, experience } from "@/content/site";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
 
@@ -49,6 +49,19 @@ export function Journey() {
                     </div>
                     <p className="mt-1 text-[15px] text-ink-2">{ed.degree}</p>
                     <p className="mt-3 font-mono text-[13px] text-ink">{ed.detail}</p>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="label mt-10 text-muted">Certification</h3>
+            <ul className="mt-4">
+              {certifications.map((c) => (
+                <li key={c.title} className="border-t border-line py-7">
+                  <Reveal>
+                    <h4 className="text-[16px] font-semibold leading-snug tracking-tight text-ink">{c.title}</h4>
+                    <p className="mt-1 text-[15px] text-ink-2">{c.issuer}</p>
+                    <p className="mt-3 text-[14px] leading-relaxed text-muted">{c.detail}</p>
                   </Reveal>
                 </li>
               ))}

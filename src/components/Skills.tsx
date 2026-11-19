@@ -16,7 +16,7 @@ export function Skills() {
         intro="Only what I've used in real projects. Each group says where you can see it at work on this page."
       />
 
-      <div className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid border-l border-t border-line sm:grid-cols-2 lg:grid-cols-4">
         {skills.map((g, i) => (
           <Reveal key={g.group} delay={(i % 3) * 0.05} className="flex flex-col border-b border-r border-line p-6 sm:p-8">
             <h3 className="text-[15px] font-semibold uppercase tracking-[0.06em] text-ink">{g.group}</h3>

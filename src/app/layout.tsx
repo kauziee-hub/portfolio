@@ -7,7 +7,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 // Condensed display face for headings, as in the reference layout
 const heading = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400" });
 const description =
-  "AI/ML engineer and full-stack developer from Chennai. Builder of Vigil, OILINTELLIGENCE, Locah, UniTask and VitaSense. CS at VIT Chennai, BS Data Science at IIT Madras.";
+  "AI/ML engineer and full-stack developer from Chennai. Third-year Computer Science at VIT Chennai and BS Data Science at IIT Madras. Builder of Vigil, OILINTELLIGENCE, Locah, UniTask and VitaSense.";
 
 export const metadata: Metadata = {
   // Set NEXT_PUBLIC_SITE_URL to the deployed address so link previews resolve.
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "Kausik Ganapathy Hari",
     description,
     type: "website",
-    images: [{ url: "/images/profile/kausik-studio.webp", width: 1400, height: 1355 }],
+    images: [{ url: "/images/profile/kausik-portrait.webp", width: 1086, height: 1448 }],
   },
 };
 
