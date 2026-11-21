@@ -7,7 +7,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 // Condensed display face for headings, as in the reference layout
 const heading = Anton({ variable: "--font-anton", subsets: ["latin"], weight: "400" });
 const description =
-  "AI/ML engineer and full-stack developer from Chennai. Third-year Computer Science at VIT Chennai and BS Data Science at IIT Madras. Builder of Vigil, OILINTELLIGENCE, Locah, UniTask and VitaSense.";
+  "AI/ML engineer and full-stack developer from Chennai. Third-year Computer Science at VIT Chennai and BS Data Science at IIT Madras. Builder of VitaSense, Vigil, OILINTELLIGENCE, Locah and UniTask.";
 
 export const metadata: Metadata = {
   // Set NEXT_PUBLIC_SITE_URL to the deployed address so link previews resolve.

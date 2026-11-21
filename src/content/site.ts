@@ -72,8 +72,76 @@ const gh = (repo: string) => `https://github.com/kauziee-hub/${repo}`;
 
 export const projects: Project[] = [
   {
-    id: "vigil",
+    id: "vitasense",
     index: "01",
+    name: "VitaSense",
+    tagline: "Personal health intelligence, live on the web and Android",
+    hook: "Your body, explained by your life. When you feel unwell, it knows the likely reason and which doctor to see.",
+    period: "Aug 2025 – Present",
+    role: "Full-stack, AI and Android",
+    context: "Website, Android app and API all live",
+    accent: "#15803D",
+    recognition: ["Jury appreciation · Avinya 2.0, SJCIT"],
+    problem:
+      "When people feel unwell they search their symptoms and get worst-case answers, because nothing knows how they've actually been living: their sleep, food, stress, the air outside or what's going around nearby. That information already exists, scattered across a watch, a phone, food apps and an inbox, but nothing connects it.",
+    approach:
+      "VitaSense connects it automatically. Once a user switches a source on, it keeps collecting on its own: sleep, heart rate, HRV and blood pressure from Health Connect (Samsung, Fitbit, Garmin and other wearables), live heart rate from a Bluetooth band, screen time and late-night phone use, Swiggy and Zomato orders, workload from the calendar, and air quality, heat and disease risk from the user's location. It turns all of this into scores for seven body systems, a 72-hour risk forecast and a care plan. When something feels wrong, the assistant explains the likely causes from the user's own last 30 days and names the right specialist. It never prescribes a medicine.",
+    outcome:
+      "Shipped as a public website and an Android app from one Expo codebase, backed by a FastAPI service on Vercel with Supabase storage and Gemini, and covered by more than 100 backend tests. It began at the Avinya 2.0 hackathon, where it earned the jury's appreciation, and has since grown into a full product.",
+    built: [
+      {
+        lead: "Data that arrives on its own.",
+        text: "Eight sources, each switched on with one tap: Health Connect (read-only), a Bluetooth band, phone usage, food- and pharmacy-delivery notifications, the calendar (counts only), Gmail orders and lab-report PDFs, location, and scanned records. Sync runs when the app opens, when it returns to the foreground, and every 30 minutes or so in the background. Switching a source off deletes what it collected.",
+      },
+      {
+        lead: "Measured risk around you.",
+        text: "From the user's location it pulls weather, seven air pollutants against WHO 24-hour limits, pollen, UV and heat index, and estimates mosquito-borne and water-borne disease risk after heavy rain, clearly labelled as estimates. It adds WHO outbreak notices for the country. Every risk shows the numbers behind it, what to watch for and which doctor or test to seek.",
+      },
+      {
+        lead: "Answers grounded in your own history.",
+        text: "A context engine gives the model only the parts of the user's history that matter for the question. A safety layer routes emergencies straight to 112 and blocks diagnoses and medicine names. Every answer lists the likely causes, what to do now and which specialist to see, and can become a one-page doctor visit report or a search for doctors nearby.",
+      },
+      {
+        lead: "Records without typing.",
+        text: "Photograph or upload a lab report, prescription or discharge summary and VitaSense reads the values, conditions, allergies and medicines into a health record a new doctor can use, with medicine reminders on the phone.",
+      },
+      {
+        lead: "Private by design.",
+        text: "Health Connect is read-only, calendar titles never leave the phone, only the area name of a location is stored, the Gmail token sits in the Android Keystore, Android backup is off, and row-level security protects the database tables.",
+      },
+    ],
+    metrics: [
+      { value: "Live", label: "website and Android app from one Expo codebase" },
+      { value: "8 sources", label: "collected automatically once switched on" },
+      { value: "70 factors", label: "that affect health, tracked in nine groups with their source" },
+      { value: "100+ tests", label: "on the backend, including the safety layer" },
+    ],
+    footnote: "Screens use the app's built-in demo profile with sample history. Air quality, weather, nearby doctors and the assistant's answer are fetched live.",
+    stack: ["Expo (React Native)", "TypeScript", "Kotlin native module", "Health Connect", "Python", "FastAPI", "Supabase (PostgreSQL)", "Gemini API", "Open-Meteo", "Vercel"],
+    media: [
+      { src: "/media/vitasense-site.webp", video: "/media/vitasense-site.mp4", caption: "The product website: the body map, the seven systems, how it works, the doctor report and the Android download" },
+      { src: "/media/vitasense-dashboard.webp", video: "/media/vitasense-dashboard.mp4", caption: "The web app: a demo profile reads its last 30 days, then each body system explains what's affecting it" },
+      { src: "/media/vitasense-android.webp", video: "/media/vitasense-android.mp4", caption: "The Android app (release APK): the body, connected data sources, the daily check-in and records" },
+      { src: "/media/vitasense-auto.webp", video: "/media/vitasense-auto.mp4", caption: "Automatic collection: connected sources, what was picked up today, the 70-factor tracker and the auto-filled check-in" },
+      { src: "/media/vitasense-ask.webp", video: "/media/vitasense-ask.mp4", caption: "A live question: the answer cites the user's own sleep, air quality and local reports, then names the doctor to see" },
+      { src: "/images/work/vitasense/landing.webp", caption: "The public website" },
+      { src: "/images/work/vitasense/dashboard.webp", caption: "Dashboard: the lungs under strain from today's measured air quality" },
+      { src: "/images/work/vitasense/profile.webp", caption: "Connected data and what was picked up automatically today" },
+      { src: "/images/work/vitasense/factors.webp", caption: "Every factor that affects health, how each is tracked, and measured risks nearby" },
+      { src: "/images/work/vitasense/checkin.webp", caption: "A three-tap check-in; everything else is filled in automatically" },
+      { src: "/images/work/vitasense/doctors.webp", caption: "Doctors near the user for the specialty the assistant suggested" },
+      { src: "/images/work/vitasense/records.webp", caption: "Health records built from photographed reports and prescriptions" },
+      { src: "/images/work/vitasense/android.webp", caption: "The Android app: home, check-in and connected data" },
+    ],
+    links: [
+      { label: "Live website", href: "https://vitasense-ai-app.vercel.app", kind: "live" },
+      { label: "Android app", href: "https://vitasense-ai-app.vercel.app/downloads/VitaSense.apk", kind: "live" },
+      { label: "Source", href: gh("VitaSense-AI"), kind: "code" },
+    ],
+  },
+  {
+    id: "vigil",
+    index: "02",
     name: "Vigil",
     tagline: "Pre-commitment payment risk and money-mule detection",
     hook: "Stops a scam payment at the last safe moment, before the money moves.",
@@ -126,7 +194,7 @@ export const projects: Project[] = [
   },
   {
     id: "oilintelligence",
-    index: "02",
+    index: "03",
     name: "OILINTELLIGENCE",
     tagline: "Physics-guided hydrocarbon loss attribution with an agentic investigator",
     hook: "Finds where crude oil goes missing in a tank farm, and proves why.",
@@ -179,7 +247,7 @@ export const projects: Project[] = [
   },
   {
     id: "locah",
-    index: "03",
+    index: "04",
     name: "Locah",
     tagline: "An AI operating system for local businesses",
     hook: "A shop owner describes their business in a conversation. Locah builds the rest.",
@@ -230,7 +298,7 @@ export const projects: Project[] = [
   },
   {
     id: "unitask",
-    index: "04",
+    index: "05",
     name: "UniTask",
     tagline: "A student planner that syncs with Microsoft Teams, deployed on AWS",
     hook: "Pulls every assignment out of Teams and tells a student what to do next, and why.",
@@ -286,60 +354,6 @@ export const projects: Project[] = [
       { label: "Live on AWS", href: "https://un-77dd2c16f6e94ab593853d98dc3c3504.ecs.ap-south-1.on.aws", kind: "live" },
       { label: "Source", href: gh("UniTask"), kind: "code" },
     ],
-  },
-  {
-    id: "vitasense",
-    index: "05",
-    name: "VitaSense",
-    tagline: "A personal health intelligence platform",
-    hook: "A health assistant that remembers you, so it stops asking the same fifteen questions.",
-    period: "Aug 2025 – Present",
-    role: "Team project · full-stack and AI",
-    accent: "#15803D",
-    recognition: ["Jury appreciation · Avinya 2.0, SJCIT"],
-    problem:
-      "Health apps and symptom checkers treat every conversation as the first one. They ask the same questions each time and ignore sleep, stress, food, air quality and history, which is usually what explains how someone feels.",
-    approach:
-      "VitaSense keeps a long-term memory of each person. Onboarding records their life, food, medical and emotional context once, and daily check-ins and device signals build on it. A deterministic forecast engine predicts the next 24 to 72 hours from 30 days of signals and names the cause. A context engine gives the AI companion only the history that matters for the question, and a safety layer blocks diagnoses and catches emergencies before a reply is shown.",
-    outcome:
-      "At Avinya 2.0, a two-day hackathon, we took it from idea to a working demo and earned the jury's appreciation for its approach to context-aware, preventive care. The backend is covered by more than 100 tests across the forecast, safety and context paths.",
-    built: [
-      {
-        lead: "A long-term health memory.",
-        text: "Onboarding captures life, food, medical and emotional context once. Daily fitness, environment, device-usage and calendar signals build on it in Supabase, so readings become trends over time instead of isolated numbers.",
-      },
-      {
-        lead: "Context before conversation.",
-        text: "A context engine retrieves and summarises only the relevant memories before the language model reasons, never a raw database dump, so the assistant asks only what it doesn't already know.",
-      },
-      {
-        lead: "A wellness forecast.",
-        text: "A deterministic model predicts readiness, energy and recovery from recent sleep, hydration, activity, HRV and air quality, and names the pattern behind the prediction.",
-      },
-      {
-        lead: "Safety built in.",
-        text: "Emergency-phrase detection, diagnosis-risk checks, escalation and disclaimers wrap every reply, and tests cover the critical paths.",
-      },
-    ],
-    metrics: [
-      { value: "24–72 h", label: "forecast of readiness, energy and recovery, with the cause named" },
-      { value: "30 days", label: "of personal signals behind every prediction" },
-      { value: "Safety layer", label: "blocks diagnoses and catches emergencies on every reply" },
-      { value: "100+", label: "backend tests on the forecast, safety and context paths" },
-    ],
-    stack: ["Next.js", "React", "TypeScript", "FastAPI", "Supabase", "PostgreSQL", "Gemini / Grok", "Tailwind CSS"],
-    media: [
-      { src: "/media/vitasense-walkthrough.webp", video: "/media/vitasense-walkthrough.mp4", caption: "The daily forecast, the physiology map and locality health intelligence" },
-      { src: "/images/work/vitasense/dashboard.webp", caption: "The wellness forecast: a 48-hour prediction, readiness score and the engines behind it" },
-      { src: "/images/work/vitasense/causal-forecast.webp", caption: "Why it's happening: a causal timeline from 30 days of signals, and what to expect in the next 24 to 72 hours" },
-      { src: "/images/work/vitasense/physiology-map.webp", caption: "Physiology map: eight body systems scored against the user's own monthly baseline" },
-      { src: "/images/work/vitasense/adaptive-plan.webp", caption: "Personal patterns, an adaptive plan for the day and a live local watch layer" },
-      { src: "/images/work/vitasense/area-map.webp", caption: "Area health map: disease, symptom and hazard signals within 3 km" },
-      { src: "/images/work/vitasense/daily-routine.webp", caption: "Daily routine: quick check-ins for food, mood, body and events that feed the forecast" },
-      { src: "/images/work/vitasense/chat.webp", caption: "The health companion, with a medical safety layer that blocks diagnoses and catches emergencies (demo conversation)" },
-      { src: "/images/work/vitasense/welcome.webp", caption: "Welcome screen" },
-    ],
-    links: [{ label: "Source", href: gh("VitaSense-AI"), kind: "code" }],
   },
   {
     id: "obsidian-mcp",

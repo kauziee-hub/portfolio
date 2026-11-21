@@ -153,7 +153,7 @@ export function Work() {
             Systems built end to end, <span className="text-muted">from data to screen.</span>
           </>
         }
-        intro="Each one started from a real problem: a scam payment, a leaking pipeline, a shop owner without software, a student buried in deadlines. I designed the models, the backend and the interface people actually use."
+        intro="Each one started from a real problem: someone unwell with no idea why, a scam payment, a leaking pipeline, a shop owner without software, a student buried in deadlines. I designed the models, the backend and the interface people actually use."
       />
 
       <nav aria-label="Projects" className="mb-6 flex flex-wrap gap-2">
