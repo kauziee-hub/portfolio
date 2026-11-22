@@ -495,6 +495,67 @@ export const projects: Project[] = [
       { label: "Source", href: gh("Wift-Tracker"), kind: "code" },
     ],
   },
+  {
+    id: "hirora",
+    index: "09",
+    name: "Hirora",
+    tagline: "A private AI assistant for calls, running entirely on a Windows PC",
+    hook: "Live transcripts and answers in about half a second, from models running on your own PC. Nothing leaves it.",
+    period: "Nov 2026",
+    role: "Designed and built solo",
+    context: "Windows 11 desktop app · v0.3.1 · open source",
+    accent: "#E7849B",
+    problem:
+      "Assistants that transcribe a meeting or lecture and answer questions about it usually send every word to a cloud service, need an account and a subscription, and lag a few seconds behind the conversation. For calls that shouldn't leave the room, or on a patchy connection, that doesn't work.",
+    approach:
+      "Hirora runs the whole pipeline on the PC. A Rust helper captures the microphone and the computer's own audio as separate streams, whisper.cpp transcribes them live, and a Qwen model in a Hirora-managed Ollama runtime answers questions as they come up. Answers draw on your own documents, with the source shown, and read the shared screen when a question points at it. They stream into a translucent overlay that never takes focus. On first launch the app checks the hardware and installs the right engine with one click: larger models on an NVIDIA GPU, smaller ones on the processor.",
+    outcome:
+      "Released as v0.3.1 for Windows 11 with an installer and a website, and open source on GitHub. On an RTX 4060 laptop a 3-second spoken question is transcribed in 0.14–0.25 s, and the first word of the answer arrives in a median 0.45 s. With no GPU at all it still answers offline, 2–4 s after the speaker stops.",
+    built: [
+      {
+        lead: "A local engine, set up in one click.",
+        text: "The app reads the GPU with nvidia-smi and picks a tier: Whisper large-v3-turbo and Qwen 3.5 4B on an NVIDIA card, Whisper small and Qwen 3 1.7B on the processor. Every download (3.2–6.2 GB) is pinned by URL, size and SHA-256, resumes if interrupted, and reuses an Ollama the user already has.",
+      },
+      {
+        lead: "Built for low latency.",
+        text: "The answer starts generating before the question ends and is shown at the pause, while a second model slot checks whether the question is meant for you. Prompts are laid out for cache reuse, and a measurement harness times every step on real hardware.",
+      },
+      {
+        lead: "Native audio in Rust.",
+        text: "A WASAPI helper streams the microphone and speaker loopback as separate 16 kHz channels over a framed protocol, and survives device switches and sleep and resume.",
+      },
+      {
+        lead: "Answers grounded in your documents.",
+        text: "PDF, DOCX, Markdown, CSV, JSON and code are parsed into a SQLite full-text index. Every answer shows which passages it used, and facts that aren't in the material are flagged instead of invented.",
+      },
+      {
+        lead: "Locked down by default.",
+        text: "No audio is captured before consent, raw audio is never saved and history is opt-in. The renderer is sandboxed, every IPC call is allowlisted and validated with Zod, and the engine servers listen only on the local machine.",
+      },
+    ],
+    metrics: [
+      { value: "0.45 s", label: "median time to the first word of an answer, RTX 4060" },
+      { value: "≤ 0.25 s", label: "to transcribe a 3-second spoken question" },
+      { value: "Offline", label: "no account, keys, server or telemetry" },
+      { value: "1 click", label: "engine setup with verified, resumable downloads" },
+    ],
+    footnote:
+      "Recorded on a fresh profile with a fictional team-notes document; every answer comes live from the local model. Timings measured on an RTX 4060 laptop on AC power. Hirora is meant for use only where AI assistance and transcription are allowed, with everyone's consent.",
+    stack: ["Electron", "React", "TypeScript", "Rust (WASAPI)", "whisper.cpp", "Ollama", "Qwen", "SQLite FTS5", "Zod", "Vitest", "Playwright"],
+    media: [
+      { src: "/media/hirora-overlay.webp", video: "/media/hirora-overlay.mp4", caption: "In a technical discussion: questions about the team's notes answered by the local model in under a second, with the sources shown" },
+      { src: "/media/hirora-app.webp", video: "/media/hirora-app.mp4", caption: "The app: live engine status, the knowledge it can use, and an engine that runs entirely on the PC" },
+      { src: "/images/work/hirora/overlay.webp", caption: "The overlay beside the shared notes, answering from them with source chips" },
+      { src: "/images/work/hirora/home.webp", caption: "Home: speech recognition and the answer model both running on this PC" },
+      { src: "/images/work/hirora/engine.webp", caption: "Engine settings: every component installed locally, picked for this PC's GPU" },
+      { src: "/images/work/hirora/knowledge.webp", caption: "Knowledge: documents parsed and indexed on the PC, with a retrieval test" },
+      { src: "/images/work/hirora/website.webp", caption: "The download website" },
+    ],
+    links: [
+      { label: "Website", href: "https://hirora-one.vercel.app", kind: "live" },
+      { label: "Source", href: gh("hirora"), kind: "code" },
+    ],
+  },
 ];
 
 export type ClientWork = {
