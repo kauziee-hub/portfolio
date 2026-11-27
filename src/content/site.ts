@@ -496,64 +496,65 @@ export const projects: Project[] = [
     ],
   },
   {
-    id: "hirora",
+    id: "doing",
     index: "09",
-    name: "Hirora",
-    tagline: "A private AI assistant for calls, running entirely on a Windows PC",
-    hook: "Live transcripts and answers in about half a second, from models running on your own PC. Nothing leaves it.",
+    name: "Doing",
+    tagline: "A free, private AI assistant for your PC, browser and meetings",
+    hook: "File tasks, browser tasks and meeting notes, handled by AI that runs on your own Windows PC. No account, no cloud model, nothing to subscribe to.",
     period: "Nov 2026",
     role: "Designed and built solo",
-    context: "Windows 11 desktop app · v0.3.1 · open source",
+    context: "Windows 11 app + Chrome/Edge extension · v0.5.1 · open source",
     accent: "#E7849B",
     problem:
-      "Assistants that transcribe a meeting or lecture and answer questions about it usually send every word to a cloud service, need an account and a subscription, and lag a few seconds behind the conversation. For calls that shouldn't leave the room, or on a patchy connection, that doesn't work.",
+      "Most AI assistants live in a browser tab and a cloud account. Your files, pages and calls are uploaded to someone else's model, you pay a subscription, and the assistant can talk about your work but can't do any of it on your computer. For anyone who wants help with everyday tasks without sending their files or meetings anywhere, there are few options.",
     approach:
-      "Hirora runs the whole pipeline on the PC. A Rust helper captures the microphone and the computer's own audio as separate streams, whisper.cpp transcribes them live, and a Qwen model in a Hirora-managed Ollama runtime answers questions as they come up. Answers draw on your own documents, with the source shown, and read the shared screen when a question points at it. They stream into a translucent overlay that never takes focus. On first launch the app checks the hardware and installs the right engine with one click: larger models on an NVIDIA GPU, smaller ones on the processor.",
+      "Doing is one assistant in three places, all backed by models running on the PC. In Assistant you allow a folder and describe the task: it creates, edits, renames or organizes text and code files, lists every change and can undo it. A Chrome and Edge extension puts a chat beside your tabs that reads the page, fills forms and selects options, and stops for your go-ahead before anything is submitted. Meetings transcribes a call once everyone agrees and answers questions about it from your own notes.",
     outcome:
-      "Released as v0.3.1 for Windows 11 with an installer and a website, and open source on GitHub. On an RTX 4060 laptop a 3-second spoken question is transcribed in 0.14–0.25 s, and the first word of the answer arrives in a median 0.45 s. With no GPU at all it still answers offline, 2–4 s after the speaker stops.",
+      "Released as v0.5.1 for Windows 11 with an installer, a website and the source on GitHub. On an RTX 4060 laptop the first word of an answer arrives in a median 0.45 s and a 3-second spoken question is transcribed in about 0.2 s; with no graphics card it still works offline and answers in 2–4 s. In the recordings below, each file task finished in under 5 s and the form was filled in about 10 s.",
     built: [
       {
+        lead: "File work you can undo.",
+        text: "Doing touches only the folder you allow, and only text, Markdown, CSV, JSON and code files. Each request becomes explicit file operations shown as a change list with Undo for the session, deleted items go to the Recycle Bin, and it never runs model-generated shell commands.",
+      },
+      {
+        lead: "A browser assistant that asks before it submits.",
+        text: "A Manifest V3 extension pairs with the app over a local connection you approve once, then works only in tabs you allow, up to eight at a time. It types, clicks and selects through the browser, checks that each action landed, and pauses for review before any submit or next step.",
+      },
+      {
+        lead: "Meetings transcribed on the PC.",
+        text: "A Rust WASAPI helper captures the microphone and call audio as separate 16 kHz streams, whisper.cpp transcribes them live, and answers start generating before a question ends. They draw on documents in the Library through a SQLite full-text index, and facts that aren't there are flagged instead of invented.",
+      },
+      {
         lead: "A local engine, set up in one click.",
-        text: "The app reads the GPU with nvidia-smi and picks a tier: Whisper large-v3-turbo and Qwen 3.5 4B on an NVIDIA card, Whisper small and Qwen 3 1.7B on the processor. Every download (3.2–6.2 GB) is pinned by URL, size and SHA-256, resumes if interrupted, and reuses an Ollama the user already has.",
-      },
-      {
-        lead: "Built for low latency.",
-        text: "The answer starts generating before the question ends and is shown at the pause, while a second model slot checks whether the question is meant for you. Prompts are laid out for cache reuse, and a measurement harness times every step on real hardware.",
-      },
-      {
-        lead: "Native audio in Rust.",
-        text: "A WASAPI helper streams the microphone and speaker loopback as separate 16 kHz channels over a framed protocol, and survives device switches and sleep and resume.",
-      },
-      {
-        lead: "Answers grounded in your documents.",
-        text: "PDF, DOCX, Markdown, CSV, JSON and code are parsed into a SQLite full-text index. Every answer shows which passages it used, and facts that aren't in the material are flagged instead of invented.",
+        text: "The app reads the GPU and picks a tier: Whisper large-v3-turbo and Qwen 3.5 4B on an NVIDIA card, smaller models on the processor. Every download (3.2–6.2 GB) is pinned by size and SHA-256, resumes if interrupted, and reuses an Ollama that's already installed.",
       },
       {
         lead: "Locked down by default.",
-        text: "No audio is captured before consent, raw audio is never saved and history is opt-in. The renderer is sandboxed, every IPC call is allowlisted and validated with Zod, and the engine servers listen only on the local machine.",
+        text: "No account, API keys or telemetry. The renderer is sandboxed, every IPC call is allowlisted and validated with Zod, the engine servers listen only on the local machine, and audio and screen captures stay in memory.",
       },
     ],
     metrics: [
       { value: "0.45 s", label: "median time to the first word of an answer, RTX 4060" },
-      { value: "≤ 0.25 s", label: "to transcribe a 3-second spoken question" },
-      { value: "Offline", label: "no account, keys, server or telemetry" },
+      { value: "0.2 s", label: "to transcribe a 3-second spoken question" },
+      { value: "Offline", label: "no account, keys, cloud model or telemetry" },
       { value: "1 click", label: "engine setup with verified, resumable downloads" },
     ],
     footnote:
-      "Recorded on a fresh profile with a fictional team-notes document; every answer comes live from the local model. Timings measured on an RTX 4060 laptop on AC power. Hirora is meant for use only where AI assistance and transcription are allowed, with everyone's consent.",
-    stack: ["Electron", "React", "TypeScript", "Rust (WASAPI)", "whisper.cpp", "Ollama", "Qwen", "SQLite FTS5", "Zod", "Vitest", "Playwright"],
+      "Recorded from the installed v0.5.1 on a fresh profile, with a fictional project folder, a local test page and fictional team notes; every reply and file change comes live from the local model. Timings measured on an RTX 4060 laptop on AC power. Doing is meant for use only where AI assistance and transcription are allowed, with everyone's consent.",
+    stack: ["Electron", "React", "TypeScript", "Chrome extension (MV3)", "Rust (WASAPI)", "whisper.cpp", "Ollama", "Qwen", "SQLite FTS5", "Zod", "Vitest", "Playwright"],
     media: [
-      { src: "/media/hirora-overlay.webp", video: "/media/hirora-overlay.mp4", caption: "In a technical discussion: questions about the team's notes answered by the local model in under a second, with the sources shown" },
-      { src: "/media/hirora-app.webp", video: "/media/hirora-app.mp4", caption: "The app: live engine status, the knowledge it can use, and an engine that runs entirely on the PC" },
-      { src: "/images/work/hirora/overlay.webp", caption: "The overlay beside the shared notes, answering from them with source chips" },
-      { src: "/images/work/hirora/home.webp", caption: "Home: speech recognition and the answer model both running on this PC" },
-      { src: "/images/work/hirora/engine.webp", caption: "Engine settings: every component installed locally, picked for this PC's GPU" },
-      { src: "/images/work/hirora/knowledge.webp", caption: "Knowledge: documents parsed and indexed on the PC, with a retrieval test" },
-      { src: "/images/work/hirora/website.webp", caption: "The download website" },
+      { src: "/media/doing-assistant.webp", video: "/media/doing-assistant.mp4", caption: "Assistant: given one folder, it writes a weekly plan from the launch checklist, renames a file, then undoes the rename" },
+      { src: "/media/doing-browser.webp", video: "/media/doing-browser.mp4", caption: "Browser assistant: answers questions about a meetup page, fills in the RSVP, then waits for the go-ahead before Register" },
+      { src: "/media/doing-meetings.webp", video: "/media/doing-meetings.mp4", caption: "Meetings overlay: questions about the team's notes answered by the local model in about a second" },
+      { src: "/media/doing-website.webp", video: "/media/doing-website.mp4", caption: "The download website" },
+      { src: "/images/work/doing/assistant.webp", caption: "Every file change listed, with Undo for the session" },
+      { src: "/images/work/doing/meetings.webp", caption: "Meetings: a question answered from the notes in the Library, with the time it took" },
+      { src: "/images/work/doing/browser-app.webp", caption: "The app side of the browser assistant: one approved, remembered connection" },
+      { src: "/images/work/doing/engine.webp", caption: "Engine settings: every part installed on this PC, picked for its NVIDIA GPU" },
     ],
     links: [
-      { label: "Website", href: "https://hirora-one.vercel.app", kind: "live" },
-      { label: "Source", href: gh("hirora"), kind: "code" },
+      { label: "Website", href: "https://doing-pc.vercel.app", kind: "live" },
+      { label: "Source", href: gh("Doing"), kind: "code" },
     ],
   },
 ];
@@ -820,7 +821,7 @@ export const skills = [
   },
   {
     group: "Generative & agentic AI",
-    items: ["Gemini API", "Prompt engineering", "RAG", "Agents with tool calling", "LangGraph", "Model Context Protocol (MCP)"],
+    items: ["Gemini API", "Local models (Ollama, whisper.cpp)", "Prompt engineering", "RAG", "Agents with tool calling", "LangGraph", "Model Context Protocol (MCP)"],
     proof: "Locah, Vigil, OILINTELLIGENCE, VitaSense, Obsidian MCP",
   },
   {
@@ -840,7 +841,7 @@ export const skills = [
   },
   {
     group: "Also shipped with",
-    items: ["TimescaleDB", "MQTT", "OPC UA", "Gmail API", "OAuth 2.1", "Cloudflare Tunnel", "Three.js", "Flutter", "Dart", "Railway"],
-    proof: "OILINTELLIGENCE, Finance Tracker, Obsidian MCP, Vigil, client work",
+    items: ["Electron", "Rust", "TimescaleDB", "MQTT", "OPC UA", "Gmail API", "OAuth 2.1", "Cloudflare Tunnel", "Three.js", "Flutter", "Dart", "Railway"],
+    proof: "Doing, OILINTELLIGENCE, Finance Tracker, Obsidian MCP, Vigil, client work",
   },
 ];
